@@ -56,6 +56,10 @@ public class MapGrid {
     }
 
 
+    public GridPoint getPointAtLoc(int x, int y){
+        return gridPoints[x][y];
+    }
+
     public int getXSize() {
         return xSize;
     }

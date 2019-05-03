@@ -11,4 +11,8 @@ public class GridPoint {
     public String toString() {
         return type + ":" + height;
     }
+
+    public String getType(){
+        return type;
+    }
 }
