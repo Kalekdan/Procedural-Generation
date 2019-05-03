@@ -35,7 +35,7 @@ public class MapGrid {
      * Makes the height of each grid point an average of its neigbours
      */
     public GridPoint[][] BasicSmoothHeightMap(){
-        GridPoint[][] smoothMap = new GridPoint[xSize][ySize];
+        GridPoint[][] smoothMap = gridPoints;
         float avgHeight;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
@@ -47,13 +47,25 @@ public class MapGrid {
     }
 
     private float averageSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
-        float avg = 0;
+        float avg = 1;
+        int numPointsChecked = 0;
         for (int i = -1; i <= 1; i++){
             for (int j = -1; j <= 1; j++){
-
+                if (pointInBounds(i + xpos,j + ypos)){
+                    numPointsChecked ++;
+                    avg += map[i + xpos][j + ypos].getHeight();
+                }
             }
         }
+        avg = avg / numPointsChecked;
         return avg;
+    }
+
+    private boolean pointInBounds(int x, int y) {
+        if ((x < 0 || x >= xSize) || (y < 0 || y >= ySize)){
+            return false;
+        }
+        return true;
     }
 
     /**

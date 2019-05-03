@@ -16,6 +16,10 @@ public class GridPoint {
         return type;
     }
 
+    public float getHeight(){
+        return height;
+    }
+
     public void setHeight(float newVal){
         height = newVal;
     }
