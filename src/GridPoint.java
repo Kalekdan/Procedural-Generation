@@ -15,4 +15,8 @@ public class GridPoint {
     public String getType(){
         return type;
     }
+
+    public void setHeight(float newVal){
+        height = newVal;
+    }
 }

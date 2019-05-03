@@ -11,6 +11,12 @@ public class MapGrid {
         gridPoints = new GridPoint[xSize][ySize];
     }
 
+    MapGrid(GridPoint[][] map, int xSize, int ySize){
+        this.xSize = xSize;
+        this.ySize = ySize;
+        gridPoints = map;
+    }
+
     /**
      * Initial generation of the map, each grid point is randomly assigned water/land and height regardless of surrounding points
      *
@@ -23,6 +29,31 @@ public class MapGrid {
                 gridPoints[i][j] = new GridPoint(GenerateTerrainType(waterPercent), GenerateTerrainHeight(minHeight, maxHeight));
             }
         }
+    }
+
+    /**
+     * Makes the height of each grid point an average of its neigbours
+     */
+    public GridPoint[][] BasicSmoothHeightMap(){
+        GridPoint[][] smoothMap = new GridPoint[xSize][ySize];
+        float avgHeight;
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
+                avgHeight = averageSurroundingPoints(smoothMap, i, j);
+                smoothMap[i][j].setHeight(avgHeight);
+            }
+        }
+        return smoothMap;
+    }
+
+    private float averageSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
+        float avg = 0;
+        for (int i = -1; i <= 1; i++){
+            for (int j = -1; j <= 1; j++){
+
+            }
+        }
+        return avg;
     }
 
     /**

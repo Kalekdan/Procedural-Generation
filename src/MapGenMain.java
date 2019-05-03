@@ -7,8 +7,11 @@ public class MapGenMain {
 
         System.out.println(map.toString());
 
-        ImageGen img = new ImageGen(map, "output.png", 1);
-        img.GenerateImg();
+        MapGrid smoothedMap = new MapGrid(map.BasicSmoothHeightMap(), 15, 20);
+        System.out.println(smoothedMap.toString());
+
+//        ImageGen img = new ImageGen(map, "output.png", 1);
+//        img.GenerateImg();
     }
 
 }
