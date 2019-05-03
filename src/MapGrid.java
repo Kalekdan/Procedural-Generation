@@ -25,6 +25,14 @@ public class MapGrid {
         }
     }
 
+    /**
+     * Tidies up the map to make it more natural after the random height and terrain generation
+     */
+    public void SmoothMap() {
+        SmoothMapTerrainTypes();
+        SmoothMapHeights();
+    }
+
     private String GenerateTerrainType(float percentWater) {
         Random r = new Random();
         if (r.nextFloat() > percentWater){
@@ -38,7 +46,11 @@ public class MapGrid {
         return 0f;
     }
 
-    private void SmoothMap() {
+    private void SmoothMapHeights() {
+
+    }
+
+    private void SmoothMapTerrainTypes() {
 
     }
 
