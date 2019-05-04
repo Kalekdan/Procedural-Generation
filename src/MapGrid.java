@@ -21,7 +21,6 @@ public class MapGrid {
      * Initial generation of the map, each grid point is randomly assigned water/land and height regardless of surrounding points
      *
      * @param waterPercent    approximate percentage of the map to be water
-     * @param heightVariation approximate aferage difference between lowest point and highest
      */
     public void InitialGenerateMap(float waterPercent, float minHeight, float maxHeight) {
         for (int i = 0; i < xSize; i++) {
@@ -34,7 +33,7 @@ public class MapGrid {
     /**
      * Makes the height of each grid point an average of its neigbours
      */
-    public GridPoint[][] BasicSmoothHeightMap(){
+    public void BasicSmoothHeightMap(){
         GridPoint[][] smoothMap = gridPoints;
         float avgHeight;
         for (int i = 0; i < xSize; i++) {
@@ -43,7 +42,7 @@ public class MapGrid {
                 smoothMap[i][j].setHeight(avgHeight);
             }
         }
-        return smoothMap;
+        gridPoints = smoothMap;
     }
 
     private float averageSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
@@ -98,15 +97,28 @@ public class MapGrid {
 
     }
 
-
+    /**
+     * Returns the point at the location given by x and y coordinates starting at 0,0
+     * @param x
+     * @param y
+     * @return
+     */
     public GridPoint getPointAtLoc(int x, int y){
         return gridPoints[x][y];
     }
 
+    /**
+     * Returns number of grid points in x direction
+     * @return
+     */
     public int getXSize() {
         return xSize;
     }
 
+    /**
+     * Returns number of grid points in y direction
+     * @return
+     */
     public int getYSize() {
         return ySize;
     }

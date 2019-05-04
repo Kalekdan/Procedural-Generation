@@ -2,7 +2,12 @@ public class GridPoint {
     private String type;
     private float height;
 
-    GridPoint(String terrainType, float terrainHeight){
+    /**
+     * Individual Grid point on the map
+     * @param terrainType type terrain (water,land etc)
+     * @param terrainHeight height of terrain
+     */
+    public GridPoint(String terrainType, float terrainHeight){
         type = terrainType;
         height = terrainHeight;
     }
@@ -20,7 +25,15 @@ public class GridPoint {
         return height;
     }
 
-    public void setHeight(float newVal){
-        height = newVal;
+    /**
+     * Sets the height to the value provided
+     * @param newHeight the value to set the new height to
+     */
+    public void setHeight(float newHeight){
+        height = newHeight;
+    }
+
+    public void setType(String newType){
+        type = newType;
     }
 }
