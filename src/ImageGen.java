@@ -8,8 +8,12 @@ public class ImageGen {
     private int width, height;
     private File OutputFile;
 
-
-
+    /**
+     * Prepares the image gen to generate an image of the map
+     * @param map the map to generate the image of
+     * @param FileLoc the project relative path to the output file
+     * @param ppg TODO the number of pixels per grid point on the final image
+     */
     ImageGen(MapGrid map, String FileLoc, int ppg){
         this.map = map;
         width = map.getXSize() * ppg;
@@ -17,6 +21,9 @@ public class ImageGen {
         OutputFile = new File(FileLoc);
     }
 
+    /**
+     * Generates the image of the map at the output location provided in construction
+     */
     public void GenerateImg(){
         BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
@@ -35,6 +42,8 @@ public class ImageGen {
                     b = 0;//(int)(Math.random()*256); //blue
                 }
 
+                //TODO add height->alpha calculation
+                a = Math.round(map.getPointAtLoc(x,y).getHeight());
 
                 int p = (a<<24) | (r<<16) | (g<<8) | b; //pixel
 
