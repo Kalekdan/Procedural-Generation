@@ -30,6 +30,25 @@ public class MapGrid {
         }
     }
 
+    public void InitialGenerateDryMap(float minHeight, float maxHeight){
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
+                gridPoints[i][j] = new GridPoint("l", GenerateTerrainHeight(minHeight, maxHeight));
+            }
+        }
+    }
+
+    public void FloodMap(float waterLevel){
+        for (int i = 0; i < xSize; i++) {
+            for (int j = 0; j < ySize; j++) {
+                if (gridPoints[i][j].getHeight() <= waterLevel){
+                    gridPoints[i][j].setHeight(waterLevel);
+                    gridPoints[i][j].setType("w");
+                }
+            }
+        }
+    }
+
     /**
      * Makes the height of each grid point an average of its neigbours
      */
@@ -84,9 +103,9 @@ public class MapGrid {
         }
     }
 
-    private float GenerateTerrainHeight(float max, float min) {
+    private float GenerateTerrainHeight(float min, float max) {
         Random r = new Random();
-        return min + r.nextFloat() * (max - min);
+        return min + (r.nextFloat() * (max - min));
     }
 
     private void SmoothMapHeights(float maxDiff, float avgDiff) {
