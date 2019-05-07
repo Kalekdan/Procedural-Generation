@@ -45,6 +45,35 @@ public class MapGrid {
         }
     }
 
+    public void RemoveTerrainNoise(int iterations) {
+        GridPoint[][] tempMap = gridPoints;
+        for (int count = 0; count < iterations; count++) {
+            tempMap = gridPoints;
+            for (int i = 0; i < xSize; i++) {
+                for (int j = 0; j < ySize; j++) {
+                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j) >= 5) {
+                        tempMap[i][j].setType("l");
+                    } else {
+                        tempMap[i][j].setType("w");
+                    }
+                }
+            }
+        }
+        gridPoints = tempMap;
+    }
+
+    private int noTerrainTilesSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
+        int numTerrainTiles = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (pointInBounds(i + xpos, j + ypos)) {
+                    numTerrainTiles += ("l".equals(map[i + xpos][j + ypos].getType())) ? 1 : 0;
+                }
+            }
+        }
+        return numTerrainTiles;
+    }
+
     /**
      * Makes the height of each grid point an average of its neigbours
      */
@@ -54,7 +83,7 @@ public class MapGrid {
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
                 if (!smoothMap[i][j].getType().equals("w")){
-                    avgHeight = averageSurroundingPoints(smoothMap, i, j);
+                    avgHeight = averageHeightSurroundingPoints(smoothMap, i, j);
                     smoothMap[i][j].setHeight(avgHeight);
                 }
             }
@@ -62,7 +91,7 @@ public class MapGrid {
         gridPoints = smoothMap;
     }
 
-    private float averageSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
+    private float averageHeightSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
         float avg = 1;
         int numPointsChecked = 0;
         for (int i = -1; i <= 1; i++) {
