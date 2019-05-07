@@ -46,12 +46,12 @@ public class MapGrid {
     }
 
     public void RemoveTerrainNoise(int iterations) {
-        GridPoint[][] tempMap = gridPoints;
+        GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            tempMap = gridPoints;
+            tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
-                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j) >= 5) {
+                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j) >= 6) {
                         tempMap[i][j].setType("l");
                     } else {
                         tempMap[i][j].setType("w");
@@ -67,10 +67,13 @@ public class MapGrid {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (pointInBounds(i + xpos, j + ypos)) {
-                    numTerrainTiles += ("l".equals(map[i + xpos][j + ypos].getType())) ? 1 : 0;
+                    if (("l".equals(map[i + xpos][j + ypos].getType()))) {
+                        numTerrainTiles++;
+                    }
                 }
             }
         }
+        System.out.println(numTerrainTiles);
         return numTerrainTiles;
     }
 
@@ -170,6 +173,17 @@ public class MapGrid {
      */
     public int getYSize() {
         return ySize;
+    }
+
+    private GridPoint[][] copyMap(GridPoint[][] mapToCopy){
+        GridPoint[][] newMap = new GridPoint[xSize][ySize];
+        for (int i = 0; i < ySize; i++) {
+            for (int j = 0; j < xSize; j++) {
+                newMap[j][i] = new GridPoint(mapToCopy[j][i].getType(),mapToCopy[j][i].getHeight());
+            }
+        }
+
+        return newMap;
     }
 
     @Override

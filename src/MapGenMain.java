@@ -22,6 +22,10 @@ public class MapGenMain {
         smoothedMap.RemoveTerrainNoise(1);
         ImageGen img3 = new ImageGen(smoothedMap, "output_smooth_terrain.png", 1);
         img3.GenerateImg();
+
+        smoothedMap.RemoveTerrainNoise(1);
+        ImageGen img4 = new ImageGen(smoothedMap, "output_smooth_terrain2.png", 1);
+        img4.GenerateImg();
     }
 
 }
