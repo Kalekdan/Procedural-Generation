@@ -4,6 +4,7 @@ public class MapGrid {
 
     private int xSize, ySize;
     private GridPoint[][] gridPoints;
+    private float waterHeightLevel;
 
     MapGrid(int xSize, int ySize) {
         this.xSize = xSize;
@@ -35,10 +36,11 @@ public class MapGrid {
     }
 
     public void FloodMap(float waterLevel) {
+        waterHeightLevel = waterLevel;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
-                if (gridPoints[i][j].getHeight() <= waterLevel) {
-                    gridPoints[i][j].setHeight(waterLevel);
+                if (gridPoints[i][j].getHeight() <= waterHeightLevel) {
+                    gridPoints[i][j].setHeight(waterHeightLevel);
                     gridPoints[i][j].setType("w");
                 }
             }
