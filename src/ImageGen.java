@@ -35,11 +35,18 @@ public class ImageGen {
                     r = 0;// (int)(Math.random()*256); //red
                     g = 0;//(int)(Math.random()*256); //green
                     b = 255;//(int)(Math.random()*256); //blue
-                } else {
+                } else if (map.getPointAtLoc(x, y).getType().equals("l")) {
                     a = 255; //(int)(Math.random()*256); //alpha
                     r = 0;// (int)(Math.random()*256); //red
                     g = 255;//(int)(Math.random()*256); //green
                     b = 0;//(int)(Math.random()*256); //blue
+                } else if (map.getPointAtLoc(x, y).getType().equals("b")) {
+                    a = 255; //(int)(Math.random()*256); //alpha
+                    r = 255;// (int)(Math.random()*256); //red
+                    g = 242;//(int)(Math.random()*256); //green
+                    b = 179;//(int)(Math.random()*256); //blue
+                } else {
+                    a = 0; r = 0; g = 0; b = 0;
                 }
 
                 //TODO add height->alpha calculation

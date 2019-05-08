@@ -1,7 +1,7 @@
 public class MapGenMain {
 
     public static void main(String[] args) {
-        MapGrid map = new MapGrid(400,300);
+        MapGrid map = new MapGrid(40,30);
 
         map.InitialGenerateDryMap(1, 255);
         map.FloodMap(100);
@@ -19,11 +19,11 @@ public class MapGenMain {
         img2.GenerateImg();
 
 
-        smoothedMap.RemoveTerrainNoise(1, 6);
+        smoothedMap.RemoveTerrainNoise(3, 6);
         ImageGen img3 = new ImageGen(smoothedMap, "output_smooth_terrain.png", 1);
         img3.GenerateImg();
 
-        smoothedMap.RemoveTerrainNoise(10, 6);
+        smoothedMap.AddBeaches(1, 3);
         ImageGen img4 = new ImageGen(smoothedMap, "output_smooth_terrain2.png", 1);
         img4.GenerateImg();
     }

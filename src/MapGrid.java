@@ -45,6 +45,23 @@ public class MapGrid {
         }
     }
 
+    public void AddBeaches(int iterations, int threshold){
+        GridPoint[][] tempMap = copyMap(gridPoints);
+        for (int count = 0; count < iterations; count++) {
+            tempMap = copyMap(gridPoints);
+            for (int i = 0; i < xSize; i++) {
+                for (int j = 0; j < ySize; j++) {
+                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "w") >= threshold && gridPoints[i][j].getType().equals("l")) {
+                        tempMap[i][j].setType("b");
+                    } else {
+                        tempMap[i][j].setType(gridPoints[i][j].getType());
+                    }
+                }
+            }
+            gridPoints = copyMap(tempMap);
+        }
+    }
+
     public void RemoveTerrainNoise(int iterations, int threshold) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
