@@ -45,35 +45,34 @@ public class MapGrid {
         }
     }
 
-    public void RemoveTerrainNoise(int iterations) {
+    public void RemoveTerrainNoise(int iterations, int threshold) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
-                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j) >= 6) {
+                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "l") >= threshold) {
                         tempMap[i][j].setType("l");
                     } else {
                         tempMap[i][j].setType("w");
                     }
                 }
             }
+            gridPoints = copyMap(tempMap);
         }
-        gridPoints = tempMap;
     }
 
-    private int noTerrainTilesSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
+    private int noTerrainTilesSurroundingPoints(GridPoint[][] map, int xpos, int ypos, String terrainType) {
         int numTerrainTiles = 0;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (pointInBounds(i + xpos, j + ypos)) {
-                    if (("l".equals(map[i + xpos][j + ypos].getType()))) {
+                    if ((terrainType.equals(map[i + xpos][j + ypos].getType()))) {
                         numTerrainTiles++;
                     }
                 }
             }
         }
-        System.out.println(numTerrainTiles);
         return numTerrainTiles;
     }
 
