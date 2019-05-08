@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class ImageGen {
     private MapGrid map;
-    private int width, height;
+    private int width, height, ppg;
     private File OutputFile;
 
     /**
@@ -16,8 +16,9 @@ public class ImageGen {
      */
     ImageGen(MapGrid map, String FileLoc, int ppg){
         this.map = map;
-        width = map.getXSize() * ppg;
-        height = map.getYSize() * ppg;
+        width = map.getXSize();
+        height = map.getYSize();
+        this.ppg = ppg;
         OutputFile = new File(FileLoc);
     }
 
@@ -25,7 +26,7 @@ public class ImageGen {
      * Generates the image of the map at the output location provided in construction
      */
     public void GenerateImg(){
-        BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage img = new BufferedImage(width * ppg, height * ppg, BufferedImage.TYPE_INT_ARGB);
 
         int a,r,g,b;
         for(int y = 0; y < height; y++){
@@ -53,8 +54,11 @@ public class ImageGen {
                 a = Math.round(map.getPointAtLoc(x,y).getHeight());
 
                 int p = (a<<24) | (r<<16) | (g<<8) | b; //pixel
-
-                img.setRGB(x, y, p);
+                for (int i = 0; i < ppg; i++){
+                    for (int j = 0; j < ppg; j++){
+                        img.setRGB(x * ppg + i, y * ppg + j, p);
+                    }
+                }
             }
         }
         //write image
