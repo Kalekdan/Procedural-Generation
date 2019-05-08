@@ -2,7 +2,7 @@
 A WIP project to have a go at procedural generation terrain.
 
 Stages:
- - Randomly heights of terrain
+ - Randomly generate heights of terrain
  - Flood terrain to provided level
  - Smooth heights
  - Smooth terrain formation
