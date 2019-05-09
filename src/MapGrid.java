@@ -20,8 +20,9 @@ public class MapGrid {
 
     /**
      * Initial generation of the map, each grid point is randomly assigned water/land and height regardless of surrounding points
-     *
      * @param waterPercent approximate percentage of the map to be water
+     * @param minHeight the minimum terrain height value
+     * @param maxHeight the maximum terrain height value
      */
     public void InitialGenerateMap(float waterPercent, float minHeight, float maxHeight) {
         for (int i = 0; i < xSize; i++) {
@@ -31,10 +32,19 @@ public class MapGrid {
         }
     }
 
+    /**
+     * Generates a map with no water with the heights randomly assigned values between min and max
+     * @param minHeight the minimum terrain height value
+     * @param maxHeight the maximum terrain height value
+     */
     public void InitialGenerateDryMap(float minHeight, float maxHeight) {
         InitialGenerateMap(0, minHeight, maxHeight);
     }
 
+    /**
+     * Adds water to the map at a level given, turning all terrain types below water level to water
+     * @param waterLevel level at which to flood the map to
+     */
     public void FloodMap(float waterLevel) {
         waterHeightLevel = waterLevel;
         for (int i = 0; i < xSize; i++) {
@@ -47,7 +57,12 @@ public class MapGrid {
         }
     }
 
-    public void AddBeaches(int iterations, int threshold){
+    /**
+     * Adds beaches to the edge of the terrain
+     * @param iterations number of times to iterate through turning terrain into beaches
+     * @param threshold the minimum number of adjacent water tiles required for terrain to be considered beach
+     */
+    public void AddBeaches(int iterations, int threshold) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             tempMap = copyMap(gridPoints);
@@ -64,6 +79,11 @@ public class MapGrid {
         }
     }
 
+    /**
+     * Smooths terrain formations and clusters terrain types together
+     * @param iterations number of times to iterate through smoothing algorithm
+     * @param threshold minumum number of adjacent land tiles for a tile to be turned into a land tile
+     */
     public void RemoveTerrainNoise(int iterations, int threshold) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
@@ -103,7 +123,7 @@ public class MapGrid {
         float avgHeight;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
-                if (!smoothMap[i][j].getType().equals("w")){
+                if (!smoothMap[i][j].getType().equals("w")) {
                     avgHeight = averageHeightSurroundingPoints(smoothMap, i, j);
                     smoothMap[i][j].setHeight(avgHeight);
                 }
@@ -134,14 +154,6 @@ public class MapGrid {
         return true;
     }
 
-    /**
-     * Tidies up the map to make it more natural after the random height and terrain generation
-     */
-    public void SmoothMap(float maxAdjacentHeightDiff, float avgAdjacentHeightDiff) {
-        SmoothMapTerrainTypes();
-        SmoothMapHeights(maxAdjacentHeightDiff, avgAdjacentHeightDiff);
-    }
-
     private String GenerateTerrainType(float percentWater) {
         Random r = new Random();
         if (r.nextFloat() > percentWater) {
@@ -154,14 +166,6 @@ public class MapGrid {
     private float GenerateTerrainHeight(float min, float max) {
         Random r = new Random();
         return min + (r.nextFloat() * (max - min));
-    }
-
-    private void SmoothMapHeights(float maxDiff, float avgDiff) {
-
-    }
-
-    private void SmoothMapTerrainTypes() {
-
     }
 
     /**
@@ -193,11 +197,11 @@ public class MapGrid {
         return ySize;
     }
 
-    private GridPoint[][] copyMap(GridPoint[][] mapToCopy){
+    private GridPoint[][] copyMap(GridPoint[][] mapToCopy) {
         GridPoint[][] newMap = new GridPoint[xSize][ySize];
         for (int i = 0; i < ySize; i++) {
             for (int j = 0; j < xSize; j++) {
-                newMap[j][i] = new GridPoint(mapToCopy[j][i].getType(),mapToCopy[j][i].getHeight());
+                newMap[j][i] = new GridPoint(mapToCopy[j][i].getType(), mapToCopy[j][i].getHeight());
             }
         }
 
