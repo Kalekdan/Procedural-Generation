@@ -170,10 +170,9 @@ public class MapGrid {
 
     /**
      * Returns the point at the location given by x and y coordinates starting at 0,0
-     *
-     * @param x
-     * @param y
-     * @return
+     * @param x x coordinate of point
+     * @param y y coordinate of point
+     * @return point at location (x,y)
      */
     public GridPoint getPointAtLoc(int x, int y) {
         return gridPoints[x][y];
@@ -181,8 +180,7 @@ public class MapGrid {
 
     /**
      * Returns number of grid points in x direction
-     *
-     * @return
+     * @return x size of grid
      */
     public int getXSize() {
         return xSize;
@@ -190,8 +188,7 @@ public class MapGrid {
 
     /**
      * Returns number of grid points in y direction
-     *
-     * @return
+     * @return y size of grid
      */
     public int getYSize() {
         return ySize;
