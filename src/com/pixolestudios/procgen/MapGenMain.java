@@ -1,3 +1,5 @@
+package com.pixolestudios.procgen;
+
 public class MapGenMain {
 
     public static void main(String[] args) {

@@ -1,3 +1,5 @@
+package com.pixolestudios.procgen;
+
 import java.util.Random;
 
 public class MapGrid {
