@@ -1,3 +1,5 @@
+package com.pixolestudios.procgen;
+
 public class GridPoint {
     private String type;
     private float height;

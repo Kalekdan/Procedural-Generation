@@ -25,12 +25,12 @@ version 'Stable'
 
 task start(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
-    main = "MapGenMain"
+    main = "com.pixolestudios.procgen.MapGenMain"
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'MapGenMain'
+        attributes 'Main-Class': 'com.pixolestudios.procgen.MapGenMain'
     }
 }
 
