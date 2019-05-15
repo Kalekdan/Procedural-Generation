@@ -1,4 +1,4 @@
-package com.pixolestudios.procgen;
+package main.java.com.pixolestudios.procgen;
 
 public class GridPoint {
     private String type;

@@ -25,15 +25,18 @@ version 'Stable'
 
 task start(type: JavaExec) {
     classpath sourceSets.main.runtimeClasspath
-    main = "com.pixolestudios.procgen.MapGenMain"
+    main = "main.java.com.pixolestudios.procgen.MapGenMain"
 }
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.pixolestudios.procgen.MapGenMain'
+        attributes 'Main-Class': 'main.java.com.pixolestudios.procgen.MapGenMain'
     }
 }
-
+dependencies {
+    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
+}
 repositories {
     mavenCentral()
 }
