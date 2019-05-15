@@ -1,4 +1,4 @@
-package com.pixolestudios.procgen;
+package main.java.com.pixolestudios.procgen;
 
 import java.util.Random;
 
@@ -8,13 +8,13 @@ public class MapGrid {
     private GridPoint[][] gridPoints;
     private float waterHeightLevel;
 
-    MapGrid(int xSize, int ySize) {
+    public MapGrid(int xSize, int ySize) {
         this.xSize = xSize;
         this.ySize = ySize;
         gridPoints = new GridPoint[xSize][ySize];
     }
 
-    MapGrid(GridPoint[][] map, int xSize, int ySize) {
+    public MapGrid(GridPoint[][] map, int xSize, int ySize) {
         this.xSize = xSize;
         this.ySize = ySize;
         gridPoints = map;

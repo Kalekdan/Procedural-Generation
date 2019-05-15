@@ -1,4 +1,4 @@
-package com.pixolestudios.procgen;
+package main.java.com.pixolestudios.procgen;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
