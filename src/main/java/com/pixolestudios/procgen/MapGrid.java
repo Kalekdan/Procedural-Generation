@@ -196,6 +196,10 @@ public class MapGrid {
         return ySize;
     }
 
+    public GridPoint[][] getMap(){
+        return gridPoints;
+    }
+
     private GridPoint[][] copyMap(GridPoint[][] mapToCopy) {
         GridPoint[][] newMap = new GridPoint[xSize][ySize];
         for (int i = 0; i < ySize; i++) {
