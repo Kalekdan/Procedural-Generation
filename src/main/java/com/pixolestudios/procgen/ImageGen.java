@@ -3,6 +3,7 @@ package main.java.com.pixolestudios.procgen;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ImageGen {
@@ -16,7 +17,7 @@ public class ImageGen {
      * @param FileLoc the project relative path to the output file
      * @param ppg TODO the number of pixels per grid point on the final image
      */
-    ImageGen(MapGrid map, String FileLoc, int ppg){
+    public ImageGen(MapGrid map, String FileLoc, int ppg){
         this.map = map;
         width = map.getXSize();
         height = map.getYSize();
@@ -28,6 +29,14 @@ public class ImageGen {
      * Generates the image of the map at the output location provided in construction
      */
     public void GenerateImg(){
+        if (map.getPointAtLoc(0,0) == null){
+            try {
+                throw new Exception("Map not yet initialised. Try generating a map before trying to make an image");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return;
+            }
+        }
         BufferedImage img = new BufferedImage(width * ppg, height * ppg, BufferedImage.TYPE_INT_ARGB);
 
         int a,r,g,b;

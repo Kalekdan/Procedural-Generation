@@ -6,7 +6,7 @@
  */
 println """
 *******************************************
- You are building...
+ You are building... ${rootDir}
  Output files will be in /build/libs
 *******************************************
 """
@@ -41,9 +41,23 @@ repositories {
     mavenCentral()
 }
 
+test.doFirst {
+    delete "${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
+    println "Deleting test output directory: ${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
+    mkdir "${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
+    println "Creating new test output directory: ${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
+}
+
 test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+}
+
+clean.doFirst {
+    delete "${rootDir}/imgout/"
+    println "Deleting image output directory: ${rootDir}/imgout/"
+    mkdir "${rootDir}/imgout/"
+    println "Creating new image output directory: ${rootDir}/imgout/"
 }
 
