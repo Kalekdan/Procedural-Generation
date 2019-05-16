@@ -96,6 +96,7 @@ public class MapGrid {
                         tempMap[i][j].setType("l");
                     } else {
                         tempMap[i][j].setType("w");
+                        tempMap[i][j].setHeight(waterHeightLevel);
                     }
                 }
             }
