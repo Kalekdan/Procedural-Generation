@@ -64,13 +64,13 @@ public class MapGrid {
      * @param iterations number of times to iterate through turning terrain into beaches
      * @param threshold the minimum number of adjacent water tiles required for terrain to be considered beach
      */
-    public void AddBeaches(int iterations, int threshold) {
+    public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
-                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "w") >= threshold && gridPoints[i][j].getType().equals("l")) {
+                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "w", squareSizeToCompare) >= threshold && gridPoints[i][j].getType().equals("l")) {
                         tempMap[i][j].setType("b");
                     } else {
                         tempMap[i][j].setType(gridPoints[i][j].getType());
@@ -86,13 +86,13 @@ public class MapGrid {
      * @param iterations number of times to iterate through smoothing algorithm
      * @param threshold minumum number of adjacent land tiles for a tile to be turned into a land tile
      */
-    public void RemoveTerrainNoise(int iterations, int threshold) {
+    public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
-                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "l") >= threshold) {
+                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "l", squareSizeToCompare) >= threshold) {
                         tempMap[i][j].setType("l");
                     } else {
                         tempMap[i][j].setType("w");
@@ -104,10 +104,10 @@ public class MapGrid {
         }
     }
 
-    private int noTerrainTilesSurroundingPoints(GridPoint[][] map, int xpos, int ypos, String terrainType) {
+    private int noTerrainTilesSurroundingPoints(GridPoint[][] map, int xpos, int ypos, String terrainType, int squareSizeToCompare) {
         int numTerrainTiles = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
+        for (int i = -squareSizeToCompare; i <= squareSizeToCompare; i++) {
+            for (int j = -squareSizeToCompare; j <= squareSizeToCompare; j++) {
                 if (pointInBounds(i + xpos, j + ypos)) {
                     if ((terrainType.equals(map[i + xpos][j + ypos].getType()))) {
                         numTerrainTiles++;
@@ -121,13 +121,13 @@ public class MapGrid {
     /**
      * Makes the height of each grid point an average of its neigbours
      */
-    public void BasicSmoothHeightMap() {
+    public void BasicSmoothHeightMap(int squareSizeToCompare) {
         GridPoint[][] smoothMap = copyMap(gridPoints);
         float avgHeight;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
                 if (!smoothMap[i][j].getType().equals("w")) {
-                    avgHeight = averageHeightSurroundingPoints(smoothMap, i, j);
+                    avgHeight = averageHeightSurroundingPoints(smoothMap, i, j, squareSizeToCompare);
                     smoothMap[i][j].setHeight(avgHeight);
                 }
             }
@@ -135,11 +135,11 @@ public class MapGrid {
         gridPoints = smoothMap;
     }
 
-    private float averageHeightSurroundingPoints(GridPoint[][] map, int xpos, int ypos) {
+    private float averageHeightSurroundingPoints(GridPoint[][] map, int xpos, int ypos, int squareSizeToCompare) {
         float avg = 1;
         int numPointsChecked = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
+        for (int i = -squareSizeToCompare; i <= squareSizeToCompare; i++) {
+            for (int j = -squareSizeToCompare; j <= squareSizeToCompare; j++) {
                 if (pointInBounds(i + xpos, j + ypos)) {
                     numPointsChecked++;
                     avg += map[i + xpos][j + ypos].getHeight();
