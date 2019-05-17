@@ -5,11 +5,12 @@ import main.java.com.pixolestudios.logUtils.LoggingLevel;
 
 public class MapGenMain {
 
+    public static Logger logger = new Logger(LoggingLevel.CONFIG);
+
     public static void main(String[] args) {
-        Logger logger = new Logger(LoggingLevel.CONFIG);
 
         logger.log("Creating map object", LoggingLevel.INFO);
-        MapGrid map = new MapGrid(1,1);
+        MapGrid map = new MapGrid(150, 100);
 
         logger.log("Generating dry terrain", LoggingLevel.INFO);
         map.InitialGenerateDryMap(1, 255);
