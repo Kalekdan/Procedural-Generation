@@ -35,6 +35,7 @@ public class ImageGen {
     public void GenerateImg(){
         if (map.getPointAtLoc(0,0) == null){
             try {
+                logger.log("Map not yet initialised. Cannot produce image.", LoggingLevel.WARNING);
                 throw new Exception("Map not yet initialised. Try generating a map before trying to make an image");
             } catch (Exception e) {
                 e.printStackTrace();
