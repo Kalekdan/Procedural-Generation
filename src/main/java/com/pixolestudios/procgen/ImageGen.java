@@ -1,10 +1,14 @@
 package main.java.com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.logUtils.LoggingLevel;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static main.java.com.pixolestudios.procgen.MapGenMain.logger;
 
 public class ImageGen {
     private MapGrid map;
@@ -37,6 +41,7 @@ public class ImageGen {
                 return;
             }
         }
+        logger.log("Generating image - Size:" + width * ppg + "x" + height * ppg, LoggingLevel.DEBUG);
         BufferedImage img = new BufferedImage(width * ppg, height * ppg, BufferedImage.TYPE_INT_ARGB);
 
         int a,r,g,b;
