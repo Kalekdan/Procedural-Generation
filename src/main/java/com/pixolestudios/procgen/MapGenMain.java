@@ -8,6 +8,7 @@ public class MapGenMain {
     public static Logger logger = new Logger(LoggingLevel.CONFIG);
 
     public static void main(String[] args) {
+        logger.writeLogsToFile("logfile.txt", true);
 
         logger.log("Creating map object", LoggingLevel.INFO);
         MapGrid map = new MapGrid(150, 100);
