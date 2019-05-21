@@ -1,5 +1,7 @@
 package main.java.com.pixolestudios.logUtils;
 
+import main.java.com.pixolestudios.fileUtils.FileUtils;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class Logger {
     }
 
     public void writeLogsToFile(String file, boolean resetLogFile) {
+        FileUtils.mkdirs(file);
         logsToFile = true;
         logFileName = file;
         try (FileWriter fw = new FileWriter(file, !resetLogFile); BufferedWriter bw = new BufferedWriter(fw); PrintWriter out = new PrintWriter(bw)) {

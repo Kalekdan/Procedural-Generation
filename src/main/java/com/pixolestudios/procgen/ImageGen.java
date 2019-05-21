@@ -1,5 +1,6 @@
 package main.java.com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.fileUtils.FileUtils;
 import main.java.com.pixolestudios.logUtils.LoggingLevel;
 
 import javax.imageio.ImageIO;
@@ -25,6 +26,7 @@ public class ImageGen {
         width = map.getXSize();
         height = map.getYSize();
         this.ppg = ppg;
+        FileUtils.mkdirs(FileLoc);
         OutputFile = new File(FileLoc);
     }
 

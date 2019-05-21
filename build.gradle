@@ -54,10 +54,3 @@ test {
     }
 }
 
-clean.doFirst {
-    delete "${rootDir}/imgout/"
-    println "Deleting image output directory: ${rootDir}/imgout/"
-    mkdir "${rootDir}/imgout/"
-    println "Creating new image output directory: ${rootDir}/imgout/"
-}
-
