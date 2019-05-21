@@ -1,8 +1,8 @@
 package main.java.com.pixolestudios.logUtils;
 
 public enum LoggingLevel {
-    CONFIG,
     DEBUG,
+    PROPERTIES,
     INFO,
     WARNING,
     ERROR,

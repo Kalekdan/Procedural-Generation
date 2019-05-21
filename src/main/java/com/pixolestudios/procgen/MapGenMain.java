@@ -5,7 +5,7 @@ import main.java.com.pixolestudios.logUtils.LoggingLevel;
 
 public class MapGenMain {
 
-    public static Logger logger = new Logger(LoggingLevel.CONFIG);
+    public static Logger logger = new Logger(LoggingLevel.DEBUG);
 
     public static void main(String[] args) {
         logger.writeLogsToFile("output/temp/logfile.txt", true);

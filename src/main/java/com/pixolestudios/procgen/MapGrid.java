@@ -71,7 +71,7 @@ public class MapGrid {
     public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            logger.log("Beach adding - Iteration " + (count+1) + "/" + iterations, LoggingLevel.CONFIG);
+            logger.log("Beach adding - Iteration " + (count+1) + "/" + iterations, LoggingLevel.DEBUG);
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
@@ -94,7 +94,7 @@ public class MapGrid {
     public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            logger.log("Noise Reduction - Iteration " + (count+1) + "/" + iterations, LoggingLevel.CONFIG);
+            logger.log("Noise Reduction - Iteration " + (count+1) + "/" + iterations, LoggingLevel.DEBUG);
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
