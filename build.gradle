@@ -6,8 +6,8 @@
  */
 println """
 *******************************************
- You are building... ${rootDir}
- Output files will be in /build/libs
+ Building Pixole Studios Proc-Gen
+ Output files will be in ${rootDir}/build/libs
 *******************************************
 """
 
@@ -44,8 +44,6 @@ repositories {
 test.doFirst {
     delete "${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
     println "Deleting test output directory: ${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
-    mkdir "${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
-    println "Creating new test output directory: ${rootDir}/src/test/java/com/pixolestudios/procgen/testout/"
 }
 
 test {
