@@ -67,6 +67,8 @@ public class MapGrid {
      * Adds beaches to the edge of the terrain
      * @param iterations number of times to iterate through turning terrain into beaches
      * @param threshold the minimum number of adjacent water tiles required for terrain to be considered beach
+     * @param squareSizeToCompare size of box of neighbouring grid points to include when checking number of water tiles
+     *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
     public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
@@ -90,6 +92,8 @@ public class MapGrid {
      * Smooths terrain formations and clusters terrain types together
      * @param iterations number of times to iterate through smoothing algorithm
      * @param threshold minumum number of adjacent land tiles for a tile to be turned into a land tile
+     * @param squareSizeToCompare size of box of neighbouring grid points to include when checking number of water tiles
+     *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
     public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
@@ -126,6 +130,8 @@ public class MapGrid {
 
     /**
      * Makes the height of each grid point an average of its neigbours
+     * @param squareSizeToCompare size of box of neighbouring grid points to include when checking heights of surrounding tiles
+     *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
     public void BasicSmoothHeightMap(int squareSizeToCompare) {
         GridPoint[][] smoothMap = copyMap(gridPoints);

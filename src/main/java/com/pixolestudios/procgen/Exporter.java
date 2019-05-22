@@ -8,10 +8,18 @@ import java.io.IOException;
 public class Exporter {
     private GridPoint[][] map;
 
+    /**
+     * Construct a new Exporter object to export maps
+     * @param map the map to be exported
+     */
     public Exporter(GridPoint[][] map) {
         this.map = map;
     }
 
+    /**
+     * Export the heightmap to a csv file
+     * @param outputFile path to the file to export to
+     */
     public void ExportHeightMapCSV(String outputFile){
         String fileContent = "";
         FileUtils.mkdirs(outputFile);
@@ -30,6 +38,10 @@ public class Exporter {
         }
     }
 
+    /**
+     * Export a csv of terrain types
+     * @param outputFile path to the file to export to
+     */
     public void ExportTerrainTypeCSV(String outputFile){
         String fileContent = "";
         FileUtils.mkdirs(outputFile);

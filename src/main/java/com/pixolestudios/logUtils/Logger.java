@@ -15,16 +15,30 @@ public class Logger {
     private boolean logsToFile = false;
     private String logFileName;
 
+    /**
+     * Construct a new logger object
+     * @param minLogginLvl the minimum logging level to be displayed. If this is WARNING, only warnings and worse will be logged
+     */
     public Logger(LoggingLevel minLogginLvl) {
         logLvl = minLogginLvl;
     }
 
+    /**
+     * Write a message to log
+     * @param input the message to log
+     * @param level the logging level of the message
+     */
     public void log(String input, LoggingLevel level){
         if (level.compareTo(logLvl) >= 0){
             output(level + ": " + input);
         }
     }
 
+    /**
+     * Makes the logger write logs to file instead of stdout
+     * @param file the log file to write to
+     * @param resetLogFile if true, will clear the log file on each new run of the application. If false, will append each application runs logs
+     */
     public void writeLogsToFile(String file, boolean resetLogFile) {
         FileUtils.mkdirs(file);
         logsToFile = true;
