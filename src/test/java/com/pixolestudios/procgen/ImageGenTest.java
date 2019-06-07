@@ -15,11 +15,11 @@ public class ImageGenTest {
 
     private final String testOutLoc = "src/test/java/com/pixolestudios/procgen/testout";
 
+    private final int mapXSize = 10, mapYSize = 20;
+    private final int pixelsPerGridPoint = 50;
+
     @Test
     public void assertImageResolutionAsExpected() {
-        int mapXSize = 10, mapYSize = 20;
-        int pixelsPerGridPoint = 50;
-
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
         mapToImage.InitialGenerateDryMap(1, 255);
 
@@ -41,7 +41,6 @@ public class ImageGenTest {
 
     @Test
     public void imageGenOnUninitializedMapDoesntMakeImage() {
-        int mapXSize = 10, mapYSize = 20;
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
 
         ImageGen img = new ImageGen(mapToImage, testOutLoc + "/imageGenOnUninitiatedMapDoesntMakeImage.png", 1);
@@ -49,5 +48,16 @@ public class ImageGenTest {
 
         File output = new File(testOutLoc + "/imageGenOnUninitiatedMapDoesntMakeImage.png");
         Assert.assertFalse("Image was created on uninitialised map.", output.exists());
+    }
+
+    @Test
+    public void imageGenOnMapMakesImageInExpectedLocation() {
+        MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
+        mapToImage.InitialGenerateDryMap(1, 255);
+
+        ImageGen img = new ImageGen(mapToImage, testOutLoc + "/imageGenOnMapMakesImageInExpectedLocation.png", pixelsPerGridPoint);
+        img.GenerateImg();
+        File output = new File(testOutLoc + "/imageGenOnMapMakesImageInExpectedLocation.png");
+        Assert.assertTrue("Image was generated in expected location.", output.exists());
     }
 }
