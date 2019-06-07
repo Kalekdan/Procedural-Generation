@@ -58,12 +58,30 @@ public class ExporterTest {
     }
 
     @Test
+    public void assertExportHeightMapCSVOutputsExpectedData() throws IOException {
+        MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
+        mapToExport.InitialGenerateDryMap(1, 255);
+        mapToExport.FloodMap(15);
+
+        Exporter export = new Exporter(mapToExport.getMap());
+        export.ExportHeightMapCSV(testOutLoc + "/assertExportHeightMapCSVOutputsExpectedData.csv");
+
+        BufferedReader reader = new BufferedReader(new FileReader(testOutLoc + "/assertExportHeightMapCSVOutputsExpectedData.csv"));
+        for (int y = 0; y < mapYSize; y++){
+            String[] line = reader.readLine().split(",");
+            for (int x = 0; x < mapXSize; x++){
+                Assert.assertEquals("Height map csv does not match at x:" + x + " y:" + y, String.valueOf(mapToExport.getPointAtLoc(x, y).getHeight()), line[x]);
+            }
+        }
+    }
+
+    @Test
     public void assertExportTerrainTypeCSVOutputExists() {
         MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
         mapToExport.InitialGenerateDryMap(1, 255);
 
         Exporter export = new Exporter(mapToExport.getMap());
-        export.ExportHeightMapCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputExists.csv");
+        export.ExportTerrainTypeCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputExists.csv");
 
         File output = new File(testOutLoc + "/assertExportTerrainTypeCSVOutputExists.csv");
         Assert.assertTrue("File was exported in expected location.", output.exists());
@@ -75,7 +93,7 @@ public class ExporterTest {
         mapToExport.InitialGenerateDryMap(1, 255);
 
         Exporter export = new Exporter(mapToExport.getMap());
-        export.ExportHeightMapCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedNumberOfRows.csv");
+        export.ExportTerrainTypeCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedNumberOfRows.csv");
 
         Path path = Paths.get(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedNumberOfRows.csv");
         long lineCount = Files.lines(path).count();
@@ -88,11 +106,28 @@ public class ExporterTest {
         mapToExport.InitialGenerateDryMap(1, 255);
 
         Exporter export = new Exporter(mapToExport.getMap());
-        export.ExportHeightMapCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedNumberOfCollumns.csv");
+        export.ExportTerrainTypeCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedNumberOfCollumns.csv");
 
         BufferedReader reader = new BufferedReader(new FileReader(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedNumberOfCollumns.csv"));
         int numberOfCollumns = reader.readLine().split(",").length;
         Assert.assertEquals("Exported file does not have number of collumns", mapXSize, numberOfCollumns);
     }
 
+    @Test
+    public void assertExportTerrainTypeCSVOutputsExpectedData() throws IOException {
+        MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
+        mapToExport.InitialGenerateDryMap(1, 255);
+        mapToExport.FloodMap(15);
+
+        Exporter export = new Exporter(mapToExport.getMap());
+        export.ExportTerrainTypeCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedData.csv");
+
+        BufferedReader reader = new BufferedReader(new FileReader(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedData.csv"));
+        for (int y = 0; y < mapYSize; y++){
+            String[] line = reader.readLine().split(",");
+            for (int x = 0; x < mapXSize; x++){
+                Assert.assertEquals("Terrain type csv does not match at x:" + x + " y:" + y, mapToExport.getPointAtLoc(x, y).getType(), line[x]);
+            }
+        }
+    }
 }
