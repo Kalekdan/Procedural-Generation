@@ -36,9 +36,13 @@ jar {
 dependencies {
     testCompile 'junit:junit:4.12'
     compile 'junit:junit:4.12'
+    compile name : 'plogger-1.0.0-alpha'
 }
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'src/libs'
+    }
 }
 
 test.doFirst {

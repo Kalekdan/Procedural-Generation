@@ -1,10 +1,8 @@
 package main.java.com.pixolestudios.procgen;
 
-import main.java.com.pixolestudios.logUtils.LoggingLevel;
+import main.java.com.pixolestudios.plogger.PLog;
 
 import java.util.Random;
-
-import static main.java.com.pixolestudios.procgen.MapGenMain.logger;
 
 public class MapGrid {
 
@@ -73,7 +71,7 @@ public class MapGrid {
     public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            logger.log("Beach adding - Iteration " + (count+1) + "/" + iterations, LoggingLevel.DEBUG);
+            PLog.debug("Beach adding - Iteration " + (count+1) + "/" + iterations);
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
@@ -98,7 +96,7 @@ public class MapGrid {
     public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) {
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            logger.log("Noise Reduction - Iteration " + (count+1) + "/" + iterations, LoggingLevel.DEBUG);
+            PLog.debug("Noise Reduction - Iteration " + (count+1) + "/" + iterations);
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
