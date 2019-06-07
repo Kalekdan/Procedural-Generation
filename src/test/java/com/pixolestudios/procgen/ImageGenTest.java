@@ -19,7 +19,7 @@ public class ImageGenTest {
     private final int pixelsPerGridPoint = 50;
 
     @Test
-    public void assertImageResolutionAsExpected() {
+    public void assertImageResolutionAsExpected() throws IOException {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
         mapToImage.InitialGenerateDryMap(1, 255);
 
@@ -27,11 +27,7 @@ public class ImageGenTest {
         img.GenerateImg();
 
         BufferedImage bimg = null;
-        try {
-            bimg = ImageIO.read(new File(testOutLoc + "/assertImageResolutionAsExpected.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        bimg = ImageIO.read(new File(testOutLoc + "/assertImageResolutionAsExpected.png"));
         int actualXSize = bimg.getWidth();
         int actualYSize = bimg.getHeight();
 
