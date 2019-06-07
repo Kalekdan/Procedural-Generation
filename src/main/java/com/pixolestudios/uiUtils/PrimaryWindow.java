@@ -4,7 +4,12 @@ import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.procgen.MapGenMain;
 import main.java.com.pixolestudios.procgen.MapGrid;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
