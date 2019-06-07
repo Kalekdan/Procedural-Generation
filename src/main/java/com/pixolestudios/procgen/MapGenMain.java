@@ -1,10 +1,15 @@
 package main.java.com.pixolestudios.procgen;
 
 import main.java.com.pixolestudios.plogger.PLog;
+import main.java.com.pixolestudios.uiUtils.PrimaryWindow;
 
 public class MapGenMain {
 
+    public static String WINDOW_TITLE = "Procedural Generator";
+
     public static void main(String[] args) {
+        PrimaryWindow window = new PrimaryWindow();
+        window.setVisible(true);
         PLog.info("Creating map object");
         MapGrid map = new MapGrid(150, 100);
 
