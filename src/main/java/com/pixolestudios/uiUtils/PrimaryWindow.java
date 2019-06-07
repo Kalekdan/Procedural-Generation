@@ -4,12 +4,7 @@ import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.procgen.MapGenMain;
 import main.java.com.pixolestudios.procgen.MapGrid;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -28,6 +23,9 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
     private JSpinner spn_mapMaxHeight;
     private JButton btn_genDryMap;
+
+    private JSpinner spn_floodWaterHeight;
+    private JButton btn_floodMap;
 
     public PrimaryWindow() {
         setupWindow();
@@ -65,8 +63,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         add(btn_genMapObj);
 
         // Generate dry map contents elements
-        SpinnerNumberModel spnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
-        spn_mapMaxHeight = new JSpinner(spnModel);
+        SpinnerNumberModel heightSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
+        spn_mapMaxHeight = new JSpinner(heightSpnModel);
         spn_mapMaxHeight.setBounds(0 + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 50, STD_HEIGHT);
 
         add(spn_mapMaxHeight);
@@ -76,6 +74,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         btn_genDryMap.addActionListener(this);
 
         add(btn_genDryMap);
+
+        // Flooding terrain elements
+        SpinnerNumberModel floodSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
+        spn_floodWaterHeight = new JSpinner(floodSpnModel);
+        spn_floodWaterHeight.setBounds(0 + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+
+        add(spn_floodWaterHeight);
+
+        btn_floodMap = new JButton("Flood map");
+        btn_floodMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_floodMap.addActionListener(this);
+
+        add(btn_floodMap);
     }
 
     @Override
@@ -85,6 +96,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
             doGenEmptyMapObjEvent();
         } else if (e.getSource() == btn_genDryMap) {
             doGenDryMapEvent();
+        } else if (e.getSource() == btn_floodMap) {
+            doFloodMapEvent();
         }
     }
 
@@ -107,6 +120,16 @@ public class PrimaryWindow extends JFrame implements ActionListener {
             PLog.warning("Max height must be a valid integer in range 1-255");
             JOptionPane.showMessageDialog(this, "Max height must be a valid whole number in range 1-255", "Invalid value", JOptionPane.WARNING_MESSAGE);
         }
+    }
+
+    private void doFloodMapEvent() {
+        try {
+            spn_floodWaterHeight.commitEdit();
+            PLog.info("Flooding terrain");
+            map.FloodMap(((Double) spn_floodWaterHeight.getValue()).floatValue());
+        } catch (ParseException e) {
+            PLog.warning("Flood height must be a valid integer in range 1-255");
+            JOptionPane.showMessageDialog(this, "Flood height must be a valid whole number in range 1-255", "Invalid value", JOptionPane.WARNING_MESSAGE);        }
     }
 
     private boolean isValidInt(String str) {
