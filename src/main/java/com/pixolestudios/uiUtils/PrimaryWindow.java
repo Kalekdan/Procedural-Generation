@@ -37,6 +37,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
     private JTextField fld_rmNoiseSize;
     private JButton btn_rmNoise;
 
+    private JTextField fld_smoothHeightSize;
+    private JButton btn_smoothHeight;
 
     public PrimaryWindow() {
         setupWindow();
@@ -121,6 +123,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         btn_rmNoise.addActionListener(this);
 
         add(btn_rmNoise);
+
+        // Height smoothing elements
+        fld_smoothHeightSize = new JTextField();
+        fld_smoothHeightSize.setBounds(0 + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_smoothHeightSize.setToolTipText("Height smoothing area size");
+
+        add(fld_smoothHeightSize);
+
+        btn_smoothHeight = new JButton("Smooth heights");
+        btn_smoothHeight.setBounds(fld_smoothHeightSize.getBounds().x + fld_smoothHeightSize.getWidth() + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_smoothHeight.addActionListener(this);
+
+        add(btn_smoothHeight);
     }
 
     @Override
@@ -134,6 +149,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
             doFloodMapEvent();
         } else if (e.getSource() == btn_rmNoise) {
             doRemoveNoiseEvent();
+        } else if (e.getSource() == btn_smoothHeight) {
+            doSmoothHeightEvent();
         }
     }
 
@@ -175,6 +192,16 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         } else {
             PLog.info("Removing terrain noise");
             map.RemoveTerrainNoise(Integer.parseInt(fld_rmNoiseIterations.getText()), Integer.parseInt(fld_rmNoiseThreshold.getText()), Integer.parseInt(fld_rmNoiseSize.getText()));
+        }
+    }
+
+    private void doSmoothHeightEvent() {
+        if (!isValidInt(fld_smoothHeightSize.getText())) {
+            PLog.warning("Smooth height area size must be a valid integer");
+            JOptionPane.showMessageDialog(this, "Smooth height area must be a valid whole number", "Invalid value", JOptionPane.WARNING_MESSAGE);
+        } else {
+            PLog.info("Smooothing heights");
+            map.BasicSmoothHeightMap(Integer.parseInt(fld_smoothHeightSize.getText()));
         }
     }
 
