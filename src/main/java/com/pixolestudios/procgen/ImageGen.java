@@ -1,5 +1,6 @@
 package main.java.com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.fileUtils.FileUtils;
 import main.java.com.pixolestudios.plogger.PLog;
 
@@ -31,7 +32,10 @@ public class ImageGen {
     /**
      * Generates the image of the map at the output location provided in construction
      */
-    public void GenerateImg(){
+    public void GenerateImg() throws UninitializedMapException {
+        if (!map.isInstantiated()){
+            throw new UninitializedMapException();
+        }
         if (map.getPointAtLoc(0,0) == null){
             PLog.warning("Map not yet initialised. Cannot produce image.");
             return;

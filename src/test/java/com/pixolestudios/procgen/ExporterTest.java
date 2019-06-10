@@ -1,5 +1,6 @@
 package com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.procgen.Exporter;
 import main.java.com.pixolestudios.procgen.MapGrid;
 import org.junit.Assert;
@@ -58,7 +59,7 @@ public class ExporterTest {
     }
 
     @Test
-    public void assertExportHeightMapCSVOutputsExpectedData() throws IOException {
+    public void assertExportHeightMapCSVOutputsExpectedData() throws IOException, UninitializedMapException {
         MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
         mapToExport.InitialGenerateDryMap(1, 255);
         mapToExport.FloodMap(15);
@@ -114,7 +115,7 @@ public class ExporterTest {
     }
 
     @Test
-    public void assertExportTerrainTypeCSVOutputsExpectedData() throws IOException {
+    public void assertExportTerrainTypeCSVOutputsExpectedData() throws IOException, UninitializedMapException {
         MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
         mapToExport.InitialGenerateDryMap(1, 255);
         mapToExport.FloodMap(15);

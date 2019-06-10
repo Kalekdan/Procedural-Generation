@@ -1,5 +1,6 @@
 package main.java.com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.plogger.PLog;
 
 import java.util.Random;
@@ -9,6 +10,7 @@ public class MapGrid {
     private int xSize, ySize;
     private GridPoint[][] gridPoints;
     private float waterHeightLevel;
+    private boolean isInstantiated = false;
 
     public MapGrid(int xSize, int ySize) {
         this.xSize = xSize;
@@ -29,6 +31,7 @@ public class MapGrid {
      * @param maxHeight the maximum terrain height value
      */
     public void InitialGenerateMap(float waterPercent, float minHeight, float maxHeight) {
+        isInstantiated = true;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
                 gridPoints[i][j] = new GridPoint(GenerateTerrainType(waterPercent), GenerateTerrainHeight(minHeight, maxHeight));
@@ -49,7 +52,10 @@ public class MapGrid {
      * Adds water to the map at a level given, turning all terrain types below water level to water
      * @param waterLevel level at which to flood the map to
      */
-    public void FloodMap(float waterLevel) {
+    public void FloodMap(float waterLevel) throws UninitializedMapException {
+        if (!isInstantiated){
+            throw new UninitializedMapException();
+        }
         waterHeightLevel = waterLevel;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
@@ -68,7 +74,10 @@ public class MapGrid {
      * @param squareSizeToCompare size of box of neighbouring grid points to include when checking number of water tiles
      *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
-    public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) {
+    public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) throws UninitializedMapException {
+        if (!isInstantiated){
+            throw new UninitializedMapException();
+        }
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             PLog.debug("Beach adding - Iteration " + (count+1) + "/" + iterations);
@@ -93,7 +102,10 @@ public class MapGrid {
      * @param squareSizeToCompare size of box of neighbouring grid points to include when checking number of water tiles
      *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
-    public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) {
+    public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) throws UninitializedMapException {
+        if (!isInstantiated){
+            throw new UninitializedMapException();
+        }
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             PLog.debug("Noise Reduction - Iteration " + (count+1) + "/" + iterations);
@@ -131,7 +143,10 @@ public class MapGrid {
      * @param squareSizeToCompare size of box of neighbouring grid points to include when checking heights of surrounding tiles
      *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
-    public void BasicSmoothHeightMap(int squareSizeToCompare) {
+    public void BasicSmoothHeightMap(int squareSizeToCompare) throws UninitializedMapException {
+        if (!isInstantiated){
+            throw new UninitializedMapException();
+        }
         GridPoint[][] smoothMap = copyMap(gridPoints);
         float avgHeight;
         for (int i = 0; i < xSize; i++) {
@@ -187,7 +202,10 @@ public class MapGrid {
      * @param y y coordinate of point
      * @return point at location (x,y)
      */
-    public GridPoint getPointAtLoc(int x, int y) {
+    public GridPoint getPointAtLoc(int x, int y) throws UninitializedMapException {
+        if (!isInstantiated){
+            throw new UninitializedMapException();
+        }
         return gridPoints[x][y];
     }
 
@@ -232,5 +250,13 @@ public class MapGrid {
             toReturn += "\n";
         }
         return toReturn;
+    }
+
+    public boolean isInstantiated() {
+        return isInstantiated;
+    }
+
+    public void setInstantiated(boolean val) {
+        isInstantiated = val;
     }
 }

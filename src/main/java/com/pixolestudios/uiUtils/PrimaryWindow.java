@@ -1,5 +1,6 @@
 package main.java.com.pixolestudios.uiUtils;
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.procgen.MapGenMain;
 import main.java.com.pixolestudios.procgen.MapGrid;
@@ -70,20 +71,29 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // If the event source was btn_genMapObj etc
-        if (e.getSource() == btn_genMapObj) {
-            doGenEmptyMapObjEvent();
-        } else if (e.getSource() == btn_genDryMap) {
-            doGenDryMapEvent();
-        } else if (e.getSource() == btn_floodMap) {
-            doFloodMapEvent();
-        } else if (e.getSource() == btn_rmNoise) {
-            doRemoveNoiseEvent();
-        } else if (e.getSource() == btn_smoothHeight) {
-            doSmoothHeightEvent();
-        } else if (e.getSource() == btn_addBeach) {
-            doAddBeachEvent();
+        try {
+            // If the event source was btn_genMapObj etc
+            if (e.getSource() == btn_genMapObj) {
+                doGenEmptyMapObjEvent();
+            } else if (e.getSource() == btn_genDryMap) {
+                doGenDryMapEvent();
+            } else if (e.getSource() == btn_floodMap) {
+                doFloodMapEvent();
+            } else if (e.getSource() == btn_rmNoise) {
+                doRemoveNoiseEvent();
+            } else if (e.getSource() == btn_smoothHeight) {
+                doSmoothHeightEvent();
+            } else if (e.getSource() == btn_addBeach) {
+                doAddBeachEvent();
+            }
+        } catch (UninitializedMapException ex) {
+            handleUninitializedMap();
         }
+    }
+
+    private void handleUninitializedMap() {
+        PLog.error("Map object must be created and initial map must be generated");
+        JOptionPane.showMessageDialog(this, "Map object must be created and initial map must be generated", "Invalid value", JOptionPane.WARNING_MESSAGE);
     }
 
     private void doGenEmptyMapObjEvent() {
@@ -96,10 +106,13 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         }
     }
 
-    private void doGenDryMapEvent() {
+    private void doGenDryMapEvent() throws UninitializedMapException {
         try {
             spn_mapMaxHeight.commitEdit();
             PLog.info("Generating dry terrain");
+            if (map == null) {
+                throw new UninitializedMapException();
+            }
             map.InitialGenerateDryMap(1, ((Double) spn_mapMaxHeight.getValue()).floatValue());
         } catch (ParseException e) {
             PLog.warning("Max height must be a valid integer in range 1-255");
@@ -107,42 +120,55 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         }
     }
 
-    private void doFloodMapEvent() {
+    private void doFloodMapEvent() throws UninitializedMapException {
         try {
             spn_floodWaterHeight.commitEdit();
             PLog.info("Flooding terrain");
+            if (map == null) {
+                throw new UninitializedMapException();
+            }
             map.FloodMap(((Double) spn_floodWaterHeight.getValue()).floatValue());
         } catch (ParseException e) {
             PLog.warning("Flood height must be a valid integer in range 1-255");
-            JOptionPane.showMessageDialog(this, "Flood height must be a valid whole number in range 1-255", "Invalid value", JOptionPane.WARNING_MESSAGE);        }
+            JOptionPane.showMessageDialog(this, "Flood height must be a valid whole number in range 1-255", "Invalid value", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
-    private void doRemoveNoiseEvent() {
+    private void doRemoveNoiseEvent() throws UninitializedMapException {
         if (!isValidInt(fld_rmNoiseIterations.getText()) || !isValidInt(fld_rmNoiseThreshold.getText()) || !isValidInt(fld_rmNoiseSize.getText())) {
             PLog.warning("Noise iterations, noise threshold and noise size must be valid integers");
             JOptionPane.showMessageDialog(this, "Noise iterations, noise threshold and noise size must be valid whole numbers", "Invalid value", JOptionPane.WARNING_MESSAGE);
         } else {
             PLog.info("Removing terrain noise");
+            if (map == null) {
+                throw new UninitializedMapException();
+            }
             map.RemoveTerrainNoise(Integer.parseInt(fld_rmNoiseIterations.getText()), Integer.parseInt(fld_rmNoiseThreshold.getText()), Integer.parseInt(fld_rmNoiseSize.getText()));
         }
     }
 
-    private void doSmoothHeightEvent() {
+    private void doSmoothHeightEvent() throws UninitializedMapException {
         if (!isValidInt(fld_smoothHeightSize.getText())) {
             PLog.warning("Smooth height area size must be a valid integer");
             JOptionPane.showMessageDialog(this, "Smooth height area must be a valid whole number", "Invalid value", JOptionPane.WARNING_MESSAGE);
         } else {
             PLog.info("Smooothing heights");
+            if (map == null) {
+                throw new UninitializedMapException();
+            }
             map.BasicSmoothHeightMap(Integer.parseInt(fld_smoothHeightSize.getText()));
         }
     }
 
-    private void doAddBeachEvent() {
+    private void doAddBeachEvent() throws UninitializedMapException {
         if (!isValidInt(fld_addBeachIterations.getText()) || !isValidInt(fld_addBeachThreshold.getText()) || !isValidInt(fld_addBeachSize.getText())) {
             PLog.warning("Beach addition iterations, threshold and area size must be valid integers");
             JOptionPane.showMessageDialog(this, "Beach addition iterations, threshold and area size must be valid whole numbers", "Invalid value", JOptionPane.WARNING_MESSAGE);
         } else {
             PLog.info("Adding beaches");
+            if (map == null) {
+                throw new UninitializedMapException();
+            }
             map.AddBeaches(Integer.parseInt(fld_addBeachIterations.getText()), Integer.parseInt(fld_addBeachThreshold.getText()), Integer.parseInt(fld_addBeachSize.getText()));
         }
     }

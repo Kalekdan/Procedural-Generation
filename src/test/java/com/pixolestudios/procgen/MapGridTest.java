@@ -1,5 +1,6 @@
 package com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.procgen.GridPoint;
 import main.java.com.pixolestudios.procgen.MapGrid;
 import org.junit.Assert;
@@ -20,11 +21,12 @@ public class MapGridTest {
             }
         }
         MapGrid map = new MapGrid(gridPoints, xSizeOfGrid, ySizeOfGrid);
+        map.setInstantiated(true);
         return map;
     }
 
     @Test
-    public void assertDryMapGenerateHasNoWater() {
+    public void assertDryMapGenerateHasNoWater() throws UninitializedMapException {
         boolean waterFound = false;
         int xSize = 40, ySize = 30;
         int countOfWater = 0;
@@ -47,23 +49,29 @@ public class MapGridTest {
     public void assertMapSizeEqualsValuesSet() {
         int xSize = 30, ySize = 15;
         MapGrid map = new MapGrid(30, 15);
-        Assert.assertEquals(map.getMap().length, xSize);
-        Assert.assertEquals(map.getMap()[0].length, ySize);
+        Assert.assertEquals(xSize, map.getMap().length);
+        Assert.assertEquals(ySize, map.getMap()[0].length);
     }
 
     @Test
     public void assertMapSizeGettersEqualsValuesSet() {
         int xSize = 30, ySize = 15;
         MapGrid map = new MapGrid(30, 15);
-        Assert.assertEquals(map.getXSize(), xSize);
-        Assert.assertEquals(map.getYSize(), ySize);
+        Assert.assertEquals(xSize, map.getXSize());
+        Assert.assertEquals(ySize, map.getYSize());
     }
 
     //TODO Update test, may need to create override functions to check equality of points
     @Test
-    public void assertMapPointGetterReturnsCorrectPoint(){
+    public void assertMapPointGetterReturnsCorrectPoint() throws UninitializedMapException {
         MapGrid map = generateFixedMapGrid();
-        Assert.assertEquals(map.getPointAtLoc(1,1).getType(), "l");
-        Assert.assertEquals(map.getPointAtLoc(1,1).getHeight(), 100, 0);
+        Assert.assertEquals("l", map.getPointAtLoc(1, 1).getType());
+        Assert.assertEquals(100, map.getPointAtLoc(1, 1).getHeight(), 0);
+    }
+
+    @Test
+    public void uninstantiatedMapReturnsUninstantiated() {
+        MapGrid map = new MapGrid(2, 2);
+        Assert.assertFalse("Expected map not instantiated", map.isInstantiated());
     }
 }

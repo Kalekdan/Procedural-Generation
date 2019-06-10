@@ -1,6 +1,8 @@
 package com.pixolestudios.procgen;
 
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
+import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.procgen.ImageGen;
 import main.java.com.pixolestudios.procgen.MapGrid;
 import org.junit.Assert;
@@ -19,7 +21,7 @@ public class ImageGenTest {
     private final int pixelsPerGridPoint = 50;
 
     @Test
-    public void assertImageResolutionAsExpected() throws IOException {
+    public void assertImageResolutionAsExpected() throws IOException, UninitializedMapException {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
         mapToImage.InitialGenerateDryMap(1, 255);
 
@@ -40,14 +42,18 @@ public class ImageGenTest {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
 
         ImageGen img = new ImageGen(mapToImage, testOutLoc + "/imageGenOnUninitiatedMapDoesntMakeImage.png", 1);
-        img.GenerateImg();
+        try {
+            img.GenerateImg();
+        } catch (UninitializedMapException e) {
+            PLog.warning("Map has not been initialized");
+        }
 
         File output = new File(testOutLoc + "/imageGenOnUninitiatedMapDoesntMakeImage.png");
         Assert.assertFalse("Image was created on uninitialised map.", output.exists());
     }
 
     @Test
-    public void imageGenOnMapMakesImageInExpectedLocation() {
+    public void imageGenOnMapMakesImageInExpectedLocation() throws UninitializedMapException {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
         mapToImage.InitialGenerateDryMap(1, 255);
 
