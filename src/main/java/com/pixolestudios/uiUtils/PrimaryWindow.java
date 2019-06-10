@@ -55,92 +55,16 @@ public class PrimaryWindow extends JFrame implements ActionListener {
     }
 
     private void setupWindowContents() {
-        // Generate empty map object elements
-        fld_mapGenXSize = new JTextField();
-        fld_mapGenXSize.setBounds(0 + MARGIN, 0 + MARGIN, 50, STD_HEIGHT);
-        fld_mapGenXSize.setName("Map X Size");
-        fld_mapGenXSize.setToolTipText("Map x size");
-
-        fld_mapGenYSize = new JTextField();
-        fld_mapGenYSize.setBounds(fld_mapGenXSize.getBounds().x + fld_mapGenXSize.getWidth() + MARGIN, 0 + MARGIN, 50, STD_HEIGHT);
-        fld_mapGenYSize.setName("Map Y Size");
-        fld_mapGenYSize.setToolTipText("Map y size");
-
-        add(fld_mapGenXSize);
-        add(fld_mapGenYSize);
-
-        btn_genMapObj = new JButton("Create empty map object");
-        btn_genMapObj.setBounds(fld_mapGenYSize.getBounds().x + fld_mapGenYSize.getWidth() + MARGIN, 0 + MARGIN, 200, STD_HEIGHT);
-        btn_genMapObj.addActionListener(this);
-
-        add(btn_genMapObj);
-
-        // Generate dry map contents elements
-        SpinnerNumberModel heightSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
-        spn_mapMaxHeight = new JSpinner(heightSpnModel);
-        spn_mapMaxHeight.setBounds(0 + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 50, STD_HEIGHT);
-
-        add(spn_mapMaxHeight);
-
-        btn_genDryMap = new JButton("Generate dry map");
-        btn_genDryMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_genDryMap.addActionListener(this);
-
-        add(btn_genDryMap);
-
-        // Flooding terrain elements
-        SpinnerNumberModel floodSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
-        spn_floodWaterHeight = new JSpinner(floodSpnModel);
-        spn_floodWaterHeight.setBounds(0 + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
-
-        add(spn_floodWaterHeight);
-
-        btn_floodMap = new JButton("Flood map");
-        btn_floodMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_floodMap.addActionListener(this);
-
-        add(btn_floodMap);
-
-        // Noise removal elements
-        fld_rmNoiseIterations = new JTextField();
-        fld_rmNoiseIterations.setBounds(0 + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
-        fld_rmNoiseIterations.setToolTipText("Noise removal iterations");
-
-        fld_rmNoiseThreshold = new JTextField();
-        fld_rmNoiseThreshold.setBounds(fld_rmNoiseIterations.getBounds().x + fld_rmNoiseIterations.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
-        fld_rmNoiseThreshold.setToolTipText("Noise removal threshold");
-
-        fld_rmNoiseSize = new JTextField();
-        fld_rmNoiseSize.setBounds(fld_rmNoiseThreshold.getBounds().x + fld_rmNoiseThreshold.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
-        fld_rmNoiseSize.setToolTipText("Noise removal area size");
-
-        add(fld_rmNoiseIterations);
-        add(fld_rmNoiseThreshold);
-        add(fld_rmNoiseSize);
-
-        btn_rmNoise = new JButton("Remove noise");
-        btn_rmNoise.setBounds(fld_rmNoiseSize.getBounds().x + fld_rmNoiseSize.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_rmNoise.addActionListener(this);
-
-        add(btn_rmNoise);
-
-        // Height smoothing elements
-        fld_smoothHeightSize = new JTextField();
-        fld_smoothHeightSize.setBounds(0 + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 50, STD_HEIGHT);
-        fld_smoothHeightSize.setToolTipText("Height smoothing area size");
-
-        add(fld_smoothHeightSize);
-
-        btn_smoothHeight = new JButton("Smooth heights");
-        btn_smoothHeight.setBounds(fld_smoothHeightSize.getBounds().x + fld_smoothHeightSize.getWidth() + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_smoothHeight.addActionListener(this);
-
-        add(btn_smoothHeight);
+        setupMapGenContents();
+        setupDryMapGenContents();
+        setupFloodTerrainContents();
+        setupNoiseRemovalContents();
+        setupHeightSmoothingContents();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // If the event source was btn_genMapObj
+        // If the event source was btn_genMapObj etc
         if (e.getSource() == btn_genMapObj) {
             doGenEmptyMapObjEvent();
         } else if (e.getSource() == btn_genDryMap) {
@@ -212,5 +136,97 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    private void setupMapGenContents() {
+        // Generate empty map object elements
+        fld_mapGenXSize = new JTextField();
+        fld_mapGenXSize.setBounds(0 + MARGIN, 0 + MARGIN, 50, STD_HEIGHT);
+        fld_mapGenXSize.setName("Map X Size");
+        fld_mapGenXSize.setToolTipText("Map x size");
+
+        fld_mapGenYSize = new JTextField();
+        fld_mapGenYSize.setBounds(fld_mapGenXSize.getBounds().x + fld_mapGenXSize.getWidth() + MARGIN, 0 + MARGIN, 50, STD_HEIGHT);
+        fld_mapGenYSize.setName("Map Y Size");
+        fld_mapGenYSize.setToolTipText("Map y size");
+
+        add(fld_mapGenXSize);
+        add(fld_mapGenYSize);
+
+        btn_genMapObj = new JButton("Create empty map object");
+        btn_genMapObj.setBounds(fld_mapGenYSize.getBounds().x + fld_mapGenYSize.getWidth() + MARGIN, 0 + MARGIN, 200, STD_HEIGHT);
+        btn_genMapObj.addActionListener(this);
+
+        add(btn_genMapObj);
+    }
+
+    private void setupDryMapGenContents() {
+        // Generate dry map contents elements
+        SpinnerNumberModel heightSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
+        spn_mapMaxHeight = new JSpinner(heightSpnModel);
+        spn_mapMaxHeight.setBounds(0 + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 50, STD_HEIGHT);
+
+        add(spn_mapMaxHeight);
+
+        btn_genDryMap = new JButton("Generate dry map");
+        btn_genDryMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_genDryMap.addActionListener(this);
+
+        add(btn_genDryMap);
+    }
+
+    private void setupFloodTerrainContents() {
+        // Flooding terrain elements
+        SpinnerNumberModel floodSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
+        spn_floodWaterHeight = new JSpinner(floodSpnModel);
+        spn_floodWaterHeight.setBounds(0 + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+
+        add(spn_floodWaterHeight);
+
+        btn_floodMap = new JButton("Flood map");
+        btn_floodMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_floodMap.addActionListener(this);
+
+        add(btn_floodMap);
+    }
+
+    private void setupNoiseRemovalContents() {
+        // Noise removal elements
+        fld_rmNoiseIterations = new JTextField();
+        fld_rmNoiseIterations.setBounds(0 + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_rmNoiseIterations.setToolTipText("Noise removal iterations");
+
+        fld_rmNoiseThreshold = new JTextField();
+        fld_rmNoiseThreshold.setBounds(fld_rmNoiseIterations.getBounds().x + fld_rmNoiseIterations.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_rmNoiseThreshold.setToolTipText("Noise removal threshold");
+
+        fld_rmNoiseSize = new JTextField();
+        fld_rmNoiseSize.setBounds(fld_rmNoiseThreshold.getBounds().x + fld_rmNoiseThreshold.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_rmNoiseSize.setToolTipText("Noise removal area size");
+
+        add(fld_rmNoiseIterations);
+        add(fld_rmNoiseThreshold);
+        add(fld_rmNoiseSize);
+
+        btn_rmNoise = new JButton("Remove noise");
+        btn_rmNoise.setBounds(fld_rmNoiseSize.getBounds().x + fld_rmNoiseSize.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_rmNoise.addActionListener(this);
+
+        add(btn_rmNoise);
+    }
+
+    private void setupHeightSmoothingContents() {
+        // Height smoothing elements
+        fld_smoothHeightSize = new JTextField();
+        fld_smoothHeightSize.setBounds(0 + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_smoothHeightSize.setToolTipText("Height smoothing area size");
+
+        add(fld_smoothHeightSize);
+
+        btn_smoothHeight = new JButton("Smooth heights");
+        btn_smoothHeight.setBounds(fld_smoothHeightSize.getBounds().x + fld_smoothHeightSize.getWidth() + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_smoothHeight.addActionListener(this);
+
+        add(btn_smoothHeight);
     }
 }
