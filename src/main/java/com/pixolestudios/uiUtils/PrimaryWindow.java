@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 
 public class PrimaryWindow extends JFrame implements ActionListener {
-    private static final int WIDTH = 400;
+    private static final int WIDTH = 600;
     private static final int HEIGHT = 300;
     private static final int MARGIN = 20;
     private static final int STD_HEIGHT = 25;
@@ -31,6 +31,12 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
     private JSpinner spn_floodWaterHeight;
     private JButton btn_floodMap;
+
+    private JTextField fld_rmNoiseIterations;
+    private JTextField fld_rmNoiseThreshold;
+    private JTextField fld_rmNoiseSize;
+    private JButton btn_rmNoise;
+
 
     public PrimaryWindow() {
         setupWindow();
@@ -92,6 +98,29 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         btn_floodMap.addActionListener(this);
 
         add(btn_floodMap);
+
+        // Noise removal elements
+        fld_rmNoiseIterations = new JTextField();
+        fld_rmNoiseIterations.setBounds(0 + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_rmNoiseIterations.setToolTipText("Noise removal iterations");
+
+        fld_rmNoiseThreshold = new JTextField();
+        fld_rmNoiseThreshold.setBounds(fld_rmNoiseIterations.getBounds().x + fld_rmNoiseIterations.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_rmNoiseThreshold.setToolTipText("Noise removal threshold");
+
+        fld_rmNoiseSize = new JTextField();
+        fld_rmNoiseSize.setBounds(fld_rmNoiseThreshold.getBounds().x + fld_rmNoiseThreshold.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_rmNoiseSize.setToolTipText("Noise removal area size");
+
+        add(fld_rmNoiseIterations);
+        add(fld_rmNoiseThreshold);
+        add(fld_rmNoiseSize);
+
+        btn_rmNoise = new JButton("Remove noise");
+        btn_rmNoise.setBounds(fld_rmNoiseSize.getBounds().x + fld_rmNoiseSize.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_rmNoise.addActionListener(this);
+
+        add(btn_rmNoise);
     }
 
     @Override
@@ -103,6 +132,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
             doGenDryMapEvent();
         } else if (e.getSource() == btn_floodMap) {
             doFloodMapEvent();
+        } else if (e.getSource() == btn_rmNoise) {
+            doRemoveNoiseEvent();
         }
     }
 
@@ -135,6 +166,16 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         } catch (ParseException e) {
             PLog.warning("Flood height must be a valid integer in range 1-255");
             JOptionPane.showMessageDialog(this, "Flood height must be a valid whole number in range 1-255", "Invalid value", JOptionPane.WARNING_MESSAGE);        }
+    }
+
+    private void doRemoveNoiseEvent() {
+        if (!isValidInt(fld_rmNoiseIterations.getText()) || !isValidInt(fld_rmNoiseThreshold.getText()) || !isValidInt(fld_rmNoiseSize.getText())) {
+            PLog.warning("Noise iterations, noise threshold and noise size must be valid integers");
+            JOptionPane.showMessageDialog(this, "Noise iterations, noise threshold and noise size must be valid whole numbers", "Invalid value", JOptionPane.WARNING_MESSAGE);
+        } else {
+            PLog.info("Removing terrain noise");
+            map.RemoveTerrainNoise(Integer.parseInt(fld_rmNoiseIterations.getText()), Integer.parseInt(fld_rmNoiseThreshold.getText()), Integer.parseInt(fld_rmNoiseSize.getText()));
+        }
     }
 
     private boolean isValidInt(String str) {
