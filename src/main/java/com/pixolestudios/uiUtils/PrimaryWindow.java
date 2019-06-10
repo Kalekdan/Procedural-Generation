@@ -16,7 +16,7 @@ import java.text.ParseException;
 
 public class PrimaryWindow extends JFrame implements ActionListener {
     private static final int WIDTH = 600;
-    private static final int HEIGHT = 300;
+    private static final int HEIGHT = 400;
     private static final int MARGIN = 20;
     private static final int STD_HEIGHT = 25;
 
@@ -40,6 +40,11 @@ public class PrimaryWindow extends JFrame implements ActionListener {
     private JTextField fld_smoothHeightSize;
     private JButton btn_smoothHeight;
 
+    private JTextField fld_addBeachIterations;
+    private JTextField fld_addBeachThreshold;
+    private JTextField fld_addBeachSize;
+    private JButton btn_addBeach;
+
     public PrimaryWindow() {
         setupWindow();
         setupWindowContents();
@@ -60,6 +65,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         setupFloodTerrainContents();
         setupNoiseRemovalContents();
         setupHeightSmoothingContents();
+        setupAddBeachesContents();
     }
 
     @Override
@@ -75,6 +81,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
             doRemoveNoiseEvent();
         } else if (e.getSource() == btn_smoothHeight) {
             doSmoothHeightEvent();
+        } else if (e.getSource() == btn_addBeach) {
+            doAddBeachEvent();
         }
     }
 
@@ -126,6 +134,16 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         } else {
             PLog.info("Smooothing heights");
             map.BasicSmoothHeightMap(Integer.parseInt(fld_smoothHeightSize.getText()));
+        }
+    }
+
+    private void doAddBeachEvent() {
+        if (!isValidInt(fld_addBeachIterations.getText()) || !isValidInt(fld_addBeachThreshold.getText()) || !isValidInt(fld_addBeachSize.getText())) {
+            PLog.warning("Beach addition iterations, threshold and area size must be valid integers");
+            JOptionPane.showMessageDialog(this, "Beach addition iterations, threshold and area size must be valid whole numbers", "Invalid value", JOptionPane.WARNING_MESSAGE);
+        } else {
+            PLog.info("Adding beaches");
+            map.AddBeaches(Integer.parseInt(fld_addBeachIterations.getText()), Integer.parseInt(fld_addBeachThreshold.getText()), Integer.parseInt(fld_addBeachSize.getText()));
         }
     }
 
@@ -228,5 +246,30 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         btn_smoothHeight.addActionListener(this);
 
         add(btn_smoothHeight);
+    }
+
+    private void setupAddBeachesContents() {
+        // Beach adding elements
+        fld_addBeachIterations = new JTextField();
+        fld_addBeachIterations.setBounds(0 + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_addBeachIterations.setToolTipText("Beach addition iterations");
+
+        fld_addBeachThreshold = new JTextField();
+        fld_addBeachThreshold.setBounds(fld_addBeachIterations.getBounds().x + fld_addBeachIterations.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_addBeachThreshold.setToolTipText("Beach addition threshold");
+
+        fld_addBeachSize = new JTextField();
+        fld_addBeachSize.setBounds(fld_addBeachThreshold.getBounds().x + fld_addBeachThreshold.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
+        fld_addBeachSize.setToolTipText("Beach addition area size");
+
+        add(fld_addBeachIterations);
+        add(fld_addBeachThreshold);
+        add(fld_addBeachSize);
+
+        btn_addBeach = new JButton("Add beaches");
+        btn_addBeach.setBounds(fld_addBeachSize.getBounds().x + fld_addBeachSize.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 200, STD_HEIGHT);
+        btn_addBeach.addActionListener(this);
+
+        add(btn_addBeach);
     }
 }
