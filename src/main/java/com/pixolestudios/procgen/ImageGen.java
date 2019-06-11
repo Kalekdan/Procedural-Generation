@@ -1,5 +1,6 @@
 package main.java.com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.fileUtils.FileUtils;
 import main.java.com.pixolestudios.plogger.PLog;
 
@@ -13,11 +14,13 @@ public class ImageGen {
     private int width, height, ppg;
     private File OutputFile;
 
+    public static final String DEFAULT_OUT_LOC = "output/imggen/tempOutImg.png";
+
     /**
      * Prepares the image gen to generate an image of the map
      * @param map the map to generate the image of
      * @param FileLoc the project relative path to the output file
-     * @param ppg TODO the number of pixels per grid point on the final image
+     * @param ppg pixels per grid point
      */
     public ImageGen(MapGrid map, String FileLoc, int ppg){
         this.map = map;
@@ -29,9 +32,21 @@ public class ImageGen {
     }
 
     /**
+     * Prepares the image gen to generate image of map at default location
+     * @param map map to generate image of
+     * @param ppg pixels per grid point
+     */
+    public ImageGen(MapGrid map, int ppg) {
+        this(map, DEFAULT_OUT_LOC, ppg);
+    }
+
+    /**
      * Generates the image of the map at the output location provided in construction
      */
-    public void GenerateImg(){
+    public void GenerateImg() throws UninitializedMapException {
+        if (!map.isInstantiated()){
+            throw new UninitializedMapException();
+        }
         if (map.getPointAtLoc(0,0) == null){
             PLog.warning("Map not yet initialised. Cannot produce image.");
             return;
