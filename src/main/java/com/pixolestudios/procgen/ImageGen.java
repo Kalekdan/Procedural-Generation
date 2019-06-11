@@ -14,11 +14,13 @@ public class ImageGen {
     private int width, height, ppg;
     private File OutputFile;
 
+    public static final String DEFAULT_OUT_LOC = "output/imggen/tempOutImg.png";
+
     /**
      * Prepares the image gen to generate an image of the map
      * @param map the map to generate the image of
      * @param FileLoc the project relative path to the output file
-     * @param ppg TODO the number of pixels per grid point on the final image
+     * @param ppg pixels per grid point
      */
     public ImageGen(MapGrid map, String FileLoc, int ppg){
         this.map = map;
@@ -27,6 +29,15 @@ public class ImageGen {
         this.ppg = ppg;
         FileUtils.mkdirs(FileLoc);
         OutputFile = new File(FileLoc);
+    }
+
+    /**
+     * Prepares the image gen to generate image of map at default location
+     * @param map map to generate image of
+     * @param ppg pixels per grid point
+     */
+    public ImageGen(MapGrid map, int ppg) {
+        this(map, DEFAULT_OUT_LOC, ppg);
     }
 
     /**

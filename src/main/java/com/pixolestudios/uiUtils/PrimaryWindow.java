@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.text.ParseException;
 
 public class PrimaryWindow extends JFrame implements ActionListener {
@@ -20,6 +21,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
     private static final int HEIGHT = 400;
     private static final int MARGIN = 20;
     private static final int STD_HEIGHT = 25;
+
+    private ImgWindow imgWindow;
 
     private static MapGrid map;
 
@@ -67,6 +70,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         setupNoiseRemovalContents();
         setupHeightSmoothingContents();
         setupAddBeachesContents();
+
+        setupImgPreview();
     }
 
     @Override
@@ -77,17 +82,29 @@ public class PrimaryWindow extends JFrame implements ActionListener {
                 doGenEmptyMapObjEvent();
             } else if (e.getSource() == btn_genDryMap) {
                 doGenDryMapEvent();
+                imgWindow.addImageToView(map);
+                imgWindow.setVisible(true);
             } else if (e.getSource() == btn_floodMap) {
                 doFloodMapEvent();
+                imgWindow.addImageToView(map);
+                imgWindow.setVisible(true);
             } else if (e.getSource() == btn_rmNoise) {
                 doRemoveNoiseEvent();
+                imgWindow.addImageToView(map);
+                imgWindow.setVisible(true);
             } else if (e.getSource() == btn_smoothHeight) {
                 doSmoothHeightEvent();
+                imgWindow.addImageToView(map);
+                imgWindow.setVisible(true);
             } else if (e.getSource() == btn_addBeach) {
                 doAddBeachEvent();
+                imgWindow.addImageToView(map);
+                imgWindow.setVisible(true);
             }
         } catch (UninitializedMapException ex) {
             handleUninitializedMap();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -337,6 +354,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_rmNoiseIterations.setEnabled(enabled);
         fld_rmNoiseThreshold.setEnabled(enabled);
         fld_rmNoiseSize.setEnabled(enabled);
+        btn_rmNoise.setEnabled(enabled);
     }
 
     private void enableHeightSmoothingContents(boolean enabled) {
@@ -349,5 +367,9 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_addBeachThreshold.setEnabled(enabled);
         fld_addBeachSize.setEnabled(enabled);
         btn_addBeach.setEnabled(enabled);
+    }
+
+    private void setupImgPreview() {
+        imgWindow = new ImgWindow();
     }
 }
