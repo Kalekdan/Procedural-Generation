@@ -5,12 +5,7 @@ import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.procgen.MapGenMain;
 import main.java.com.pixolestudios.procgen.MapGrid;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -103,6 +98,8 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         } else {
             PLog.info("Creating map object");
             map = new MapGrid(Integer.parseInt(fld_mapGenXSize.getText()), Integer.parseInt(fld_mapGenYSize.getText()));
+            enableDryMapGenContents();
+            enableMapFunctionsContents(false);
         }
     }
 
@@ -114,6 +111,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
                 throw new UninitializedMapException();
             }
             map.InitialGenerateDryMap(1, ((Double) spn_mapMaxHeight.getValue()).floatValue());
+            enableMapFunctionsContents(true);
         } catch (ParseException e) {
             PLog.warning("Max height must be a valid integer in range 1-255");
             JOptionPane.showMessageDialog(this, "Max height must be a valid whole number in range 1-255", "Invalid value", JOptionPane.WARNING_MESSAGE);
@@ -209,12 +207,14 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         SpinnerNumberModel heightSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
         spn_mapMaxHeight = new JSpinner(heightSpnModel);
         spn_mapMaxHeight.setBounds(0 + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 50, STD_HEIGHT);
+        spn_mapMaxHeight.setEnabled(false);
 
         add(spn_mapMaxHeight);
 
         btn_genDryMap = new JButton("Generate dry map");
         btn_genDryMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 200, STD_HEIGHT);
         btn_genDryMap.addActionListener(this);
+        btn_genDryMap.setEnabled(false);
 
         add(btn_genDryMap);
     }
@@ -224,12 +224,14 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         SpinnerNumberModel floodSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
         spn_floodWaterHeight = new JSpinner(floodSpnModel);
         spn_floodWaterHeight.setBounds(0 + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
+        spn_floodWaterHeight.setEnabled(false);
 
         add(spn_floodWaterHeight);
 
         btn_floodMap = new JButton("Flood map");
         btn_floodMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
         btn_floodMap.addActionListener(this);
+        btn_floodMap.setEnabled(false);
 
         add(btn_floodMap);
     }
@@ -239,14 +241,17 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_rmNoiseIterations = new JTextField();
         fld_rmNoiseIterations.setBounds(0 + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_rmNoiseIterations.setToolTipText("Noise removal iterations");
+        fld_rmNoiseIterations.setEnabled(false);
 
         fld_rmNoiseThreshold = new JTextField();
         fld_rmNoiseThreshold.setBounds(fld_rmNoiseIterations.getBounds().x + fld_rmNoiseIterations.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_rmNoiseThreshold.setToolTipText("Noise removal threshold");
+        fld_rmNoiseThreshold.setEnabled(false);
 
         fld_rmNoiseSize = new JTextField();
         fld_rmNoiseSize.setBounds(fld_rmNoiseThreshold.getBounds().x + fld_rmNoiseThreshold.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_rmNoiseSize.setToolTipText("Noise removal area size");
+        fld_rmNoiseSize.setEnabled(false);
 
         add(fld_rmNoiseIterations);
         add(fld_rmNoiseThreshold);
@@ -255,6 +260,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         btn_rmNoise = new JButton("Remove noise");
         btn_rmNoise.setBounds(fld_rmNoiseSize.getBounds().x + fld_rmNoiseSize.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
         btn_rmNoise.addActionListener(this);
+        btn_rmNoise.setEnabled(false);
 
         add(btn_rmNoise);
     }
@@ -264,12 +270,14 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_smoothHeightSize = new JTextField();
         fld_smoothHeightSize.setBounds(0 + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_smoothHeightSize.setToolTipText("Height smoothing area size");
+        fld_smoothHeightSize.setEnabled(false);
 
         add(fld_smoothHeightSize);
 
         btn_smoothHeight = new JButton("Smooth heights");
         btn_smoothHeight.setBounds(fld_smoothHeightSize.getBounds().x + fld_smoothHeightSize.getWidth() + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 200, STD_HEIGHT);
         btn_smoothHeight.addActionListener(this);
+        btn_smoothHeight.setEnabled(false);
 
         add(btn_smoothHeight);
     }
@@ -279,14 +287,17 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_addBeachIterations = new JTextField();
         fld_addBeachIterations.setBounds(0 + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_addBeachIterations.setToolTipText("Beach addition iterations");
+        fld_addBeachIterations.setEnabled(false);
 
         fld_addBeachThreshold = new JTextField();
         fld_addBeachThreshold.setBounds(fld_addBeachIterations.getBounds().x + fld_addBeachIterations.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_addBeachThreshold.setToolTipText("Beach addition threshold");
+        fld_addBeachThreshold.setEnabled(false);
 
         fld_addBeachSize = new JTextField();
         fld_addBeachSize.setBounds(fld_addBeachThreshold.getBounds().x + fld_addBeachThreshold.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_addBeachSize.setToolTipText("Beach addition area size");
+        fld_addBeachSize.setEnabled(false);
 
         add(fld_addBeachIterations);
         add(fld_addBeachThreshold);
@@ -295,7 +306,43 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         btn_addBeach = new JButton("Add beaches");
         btn_addBeach.setBounds(fld_addBeachSize.getBounds().x + fld_addBeachSize.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 200, STD_HEIGHT);
         btn_addBeach.addActionListener(this);
+        btn_addBeach.setEnabled(false);
 
         add(btn_addBeach);
+    }
+
+    private void enableDryMapGenContents() {
+        spn_mapMaxHeight.setEnabled(true);
+        btn_genDryMap.setEnabled(true);
+    }
+
+    private void enableMapFunctionsContents(boolean enabled) {
+        enableFloodTerrainContents(enabled);
+        enableNoiseRemovalContents(enabled);
+        enableHeightSmoothingContents(enabled);
+        enableAddBeachesContents(enabled);
+    }
+
+    private void enableFloodTerrainContents(boolean enabled) {
+        spn_floodWaterHeight.setEnabled(enabled);
+        btn_floodMap.setEnabled(enabled);
+    }
+
+    private void enableNoiseRemovalContents(boolean enabled) {
+        fld_rmNoiseIterations.setEnabled(enabled);
+        fld_rmNoiseThreshold.setEnabled(enabled);
+        fld_rmNoiseSize.setEnabled(enabled);
+    }
+
+    private void enableHeightSmoothingContents(boolean enabled) {
+        fld_smoothHeightSize.setEnabled(enabled);
+        btn_smoothHeight.setEnabled(enabled);
+    }
+
+    private void enableAddBeachesContents(boolean enabled) {
+        fld_addBeachIterations.setEnabled(enabled);
+        fld_addBeachThreshold.setEnabled(enabled);
+        fld_addBeachSize.setEnabled(enabled);
+        btn_addBeach.setEnabled(enabled);
     }
 }
