@@ -47,10 +47,6 @@ public class ImageGen {
         if (!map.isInstantiated()){
             throw new UninitializedMapException();
         }
-        if (map.getPointAtLoc(0,0) == null){
-            PLog.warning("Map not yet initialised. Cannot produce image.");
-            return;
-        }
         PLog.debug("Generating image - Size:" + width * ppg + "x" + height * ppg);
         BufferedImage img = new BufferedImage(width * ppg, height * ppg, BufferedImage.TYPE_INT_ARGB);
 

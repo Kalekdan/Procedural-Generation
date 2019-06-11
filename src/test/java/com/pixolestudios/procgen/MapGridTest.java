@@ -81,4 +81,67 @@ public class MapGridTest {
         map.InitialGenerateDryMap(1, 100);
         Assert.assertTrue("Expectte map instantiated", map.isInstantiated());
     }
+
+    @Test
+    public void floodUninstantiatedMapThrowsException() {
+        MapGrid map = new MapGrid(1, 1);
+        try {
+            map.FloodMap(1);
+        } catch (Exception e) {
+            Assert.assertTrue("Expected main.java.com.pixolestudios.exceptions.UninitializedMapException but got " + e.getClass().getName(), e.getClass() == UninitializedMapException.class);
+        }
+    }
+
+    @Test
+    public void removeNoiseUninstantiatedMapThrowsException() {
+        MapGrid map = new MapGrid(1, 1);
+        try {
+            map.RemoveTerrainNoise(1, 1, 1);
+        } catch (Exception e) {
+            Assert.assertTrue("Expected main.java.com.pixolestudios.exceptions.UninitializedMapException but got " + e.getClass().getName(), e.getClass() == UninitializedMapException.class);
+        }
+    }
+
+    @Test
+    public void addBeachesUninstantiatedMapThrowsException() {
+        MapGrid map = new MapGrid(1, 1);
+        try {
+            map.AddBeaches(1, 1, 1);
+        } catch (Exception e) {
+            Assert.assertTrue("Expected main.java.com.pixolestudios.exceptions.UninitializedMapException but got " + e.getClass().getName(), e.getClass() == UninitializedMapException.class);
+        }
+    }
+
+    @Test
+    public void SmoothHeightsUninstantiatedMapThrowsException() {
+        MapGrid map = new MapGrid(1, 1);
+        try {
+            map.BasicSmoothHeightMap(1);
+        } catch (Exception e) {
+            Assert.assertTrue("Expected main.java.com.pixolestudios.exceptions.UninitializedMapException but got " + e.getClass().getName(), e.getClass() == UninitializedMapException.class);
+        }
+    }
+
+    @Test
+    public void getPointUninstantiatedMapThrowsException() {
+        MapGrid map = new MapGrid(1, 1);
+        try {
+            map.getPointAtLoc(1, 1);
+        } catch (Exception e) {
+            Assert.assertTrue("Expected main.java.com.pixolestudios.exceptions.UninitializedMapException but got " + e.getClass().getName(), e.getClass() == UninitializedMapException.class);
+        }
+    }
+
+    @Test
+    public void mapToStringReturnsExpectedString() throws UninitializedMapException {
+        MapGrid map = new MapGrid(3, 2);
+        map.InitialGenerateDryMap(20, 20);
+
+        Assert.assertEquals("l:20.0\t\tl:20.0\t\tl:20.0\t\t\n" +
+                "l:20.0\t\tl:20.0\t\tl:20.0\t\t\n", map.toString());
+
+        map.FloodMap(21);
+        Assert.assertEquals("w:21.0\t\tw:21.0\t\tw:21.0\t\t\n" +
+                "w:21.0\t\tw:21.0\t\tw:21.0\t\t\n", map.toString());
+    }
 }
