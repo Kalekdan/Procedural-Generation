@@ -74,4 +74,11 @@ public class MapGridTest {
         MapGrid map = new MapGrid(2, 2);
         Assert.assertFalse("Expected map not instantiated", map.isInstantiated());
     }
+
+    @Test
+    public void instantiatedMapReturnsInstantiated() {
+        MapGrid map = new MapGrid(2, 2);
+        map.InitialGenerateDryMap(1, 100);
+        Assert.assertTrue("Expectte map instantiated", map.isInstantiated());
+    }
 }
