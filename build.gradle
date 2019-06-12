@@ -16,6 +16,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'jacoco'
 
 mainClassName = 'main.java.com.pixolestudios.procgen.MapGenMain'
 
@@ -89,3 +90,25 @@ test {
     }
 }
 
+// JaCoCo configuration
+test.finalizedBy jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            element = 'CLASS'
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.9
+            }
+            excludes = [ //Excludes main class, ui classes and test classes from coverage check
+                    'main.java.com.pixolestudios.procgen.MapGenMain',
+                    'main.java.com.pixolestudios.uiUtils.*',
+                    'com.pixolestudios.procgen.MapGridTest',
+                    'com.pixolestudios.procgen.ImageGenTest'
+            ]
+        }
+    }
+}

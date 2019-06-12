@@ -38,5 +38,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
-      - run: gradle clean test
+      # build, run tests and assert coverage!
+      - clean_and_build: gradle clean assemble
+      - run_tests: gradle test
+      - coverage: gradle jacocoTestCoverageVerification
