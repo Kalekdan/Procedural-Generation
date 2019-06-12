@@ -1,17 +1,14 @@
 package main.java.com.pixolestudios.procgen;
 
+import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.uiUtils.PrimaryWindow;
 
 public class MapGenMain {
 
     public static String WINDOW_TITLE = "Procedural Generator";
 
-    private static PrimaryWindow window = new PrimaryWindow();
-
-    private MapGenMain() {
-    }
-
     public static void main(String[] args) {
+        PrimaryWindow window = new PrimaryWindow();
         window.setVisible(true);
 
 //        Exporter export = new Exporter(map.getMap());
@@ -19,7 +16,4 @@ public class MapGenMain {
 //        export.ExportTerrainTypeCSV("output/exports/terrainType.csv");
     }
 
-    public static PrimaryWindow getWindow(){
-        return window;
-    }
 }
