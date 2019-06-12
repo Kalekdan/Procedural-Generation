@@ -75,7 +75,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # builds
+      # runs tests
       - run: gradle test
 
   coverage:
@@ -112,5 +112,5 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # builds
+      # checks test coverage
       - run: gradle jacocoTestCoverageVerification
