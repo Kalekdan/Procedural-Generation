@@ -26,9 +26,10 @@ public class MapGrid {
 
     /**
      * Initial generation of the map, each grid point is randomly assigned water/land and height regardless of surrounding points
+     *
      * @param waterPercent approximate percentage of the map to be water
-     * @param minHeight the minimum terrain height value
-     * @param maxHeight the maximum terrain height value
+     * @param minHeight    the minimum terrain height value
+     * @param maxHeight    the maximum terrain height value
      */
     public void InitialGenerateMap(float waterPercent, float minHeight, float maxHeight) {
         isInstantiated = true;
@@ -41,6 +42,7 @@ public class MapGrid {
 
     /**
      * Generates a map with no water with the heights randomly assigned values between min and max
+     *
      * @param minHeight the minimum terrain height value
      * @param maxHeight the maximum terrain height value
      */
@@ -50,10 +52,11 @@ public class MapGrid {
 
     /**
      * Adds water to the map at a level given, turning all terrain types below water level to water
+     *
      * @param waterLevel level at which to flood the map to
      */
     public void FloodMap(float waterLevel) throws UninitializedMapException {
-        if (!isInstantiated){
+        if (!isInstantiated) {
             throw new UninitializedMapException();
         }
         waterHeightLevel = waterLevel;
@@ -69,18 +72,19 @@ public class MapGrid {
 
     /**
      * Adds beaches to the edge of the terrain
-     * @param iterations number of times to iterate through turning terrain into beaches
-     * @param threshold the minimum number of adjacent water tiles required for terrain to be considered beach
+     *
+     * @param iterations          number of times to iterate through turning terrain into beaches
+     * @param threshold           the minimum number of adjacent water tiles required for terrain to be considered beach
      * @param squareSizeToCompare size of box of neighbouring grid points to include when checking number of water tiles
      *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
     public void AddBeaches(int iterations, int threshold, int squareSizeToCompare) throws UninitializedMapException {
-        if (!isInstantiated){
+        if (!isInstantiated) {
             throw new UninitializedMapException();
         }
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            PLog.debug("Beach adding - Iteration " + (count+1) + "/" + iterations);
+            PLog.debug("Beach adding - Iteration " + (count + 1) + "/" + iterations);
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
@@ -97,18 +101,19 @@ public class MapGrid {
 
     /**
      * Smooths terrain formations and clusters terrain types together
-     * @param iterations number of times to iterate through smoothing algorithm
-     * @param threshold minumum number of adjacent land tiles for a tile to be turned into a land tile
+     *
+     * @param iterations          number of times to iterate through smoothing algorithm
+     * @param threshold           minumum number of adjacent land tiles for a tile to be turned into a land tile
      * @param squareSizeToCompare size of box of neighbouring grid points to include when checking number of water tiles
      *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
     public void RemoveTerrainNoise(int iterations, int threshold, int squareSizeToCompare) throws UninitializedMapException {
-        if (!isInstantiated){
+        if (!isInstantiated) {
             throw new UninitializedMapException();
         }
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            PLog.debug("Noise Reduction - Iteration " + (count+1) + "/" + iterations);
+            PLog.debug("Noise Reduction - Iteration " + (count + 1) + "/" + iterations);
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
@@ -140,11 +145,12 @@ public class MapGrid {
 
     /**
      * Makes the height of each grid point an average of its neigbours
+     *
      * @param squareSizeToCompare size of box of neighbouring grid points to include when checking heights of surrounding tiles
      *                            For example if 3, will check 3 left, up, right and down (7x7 square) around each point
      */
     public void BasicSmoothHeightMap(int squareSizeToCompare) throws UninitializedMapException {
-        if (!isInstantiated){
+        if (!isInstantiated) {
             throw new UninitializedMapException();
         }
         GridPoint[][] smoothMap = copyMap(gridPoints);
@@ -198,12 +204,13 @@ public class MapGrid {
 
     /**
      * Returns the point at the location given by x and y coordinates starting at 0,0
+     *
      * @param x x coordinate of point
      * @param y y coordinate of point
      * @return point at location (x,y)
      */
     public GridPoint getPointAtLoc(int x, int y) throws UninitializedMapException {
-        if (!isInstantiated){
+        if (!isInstantiated) {
             throw new UninitializedMapException();
         }
         return gridPoints[x][y];
@@ -211,6 +218,7 @@ public class MapGrid {
 
     /**
      * Returns number of grid points in x direction
+     *
      * @return x size of grid
      */
     public int getXSize() {
@@ -219,13 +227,14 @@ public class MapGrid {
 
     /**
      * Returns number of grid points in y direction
+     *
      * @return y size of grid
      */
     public int getYSize() {
         return ySize;
     }
 
-    public GridPoint[][] getMap(){
+    public GridPoint[][] getMap() {
         return gridPoints;
     }
 

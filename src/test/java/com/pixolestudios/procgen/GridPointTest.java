@@ -12,7 +12,7 @@ public class GridPointTest {
     float terrainHeight = 3.14f;
 
     @Before
-    public void setup(){
+    public void setup() {
         gridPoint = new GridPoint(terrainType, terrainHeight);
     }
 
@@ -23,7 +23,7 @@ public class GridPointTest {
     }
 
     @Test
-    public void assertSettersUpdateValues(){
+    public void assertSettersUpdateValues() {
         String newType = "newTerrainType";
         float newTerrainHeight = 9.876f;
         gridPoint.setType(newType);
@@ -34,7 +34,7 @@ public class GridPointTest {
     }
 
     @Test
-    public void assertToStringFitsExpectedFormat(){
+    public void assertToStringFitsExpectedFormat() {
         Assert.assertEquals(gridPoint.toString(), terrainType + ":" + terrainHeight);
     }
 

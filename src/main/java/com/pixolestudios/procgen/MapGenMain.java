@@ -1,6 +1,5 @@
 package main.java.com.pixolestudios.procgen;
 
-import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.uiUtils.PrimaryWindow;
 
 public class MapGenMain {

@@ -208,11 +208,13 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_mapGenXSize.setBounds(0 + MARGIN, 0 + MARGIN, 50, STD_HEIGHT);
         fld_mapGenXSize.setName("Map X Size");
         fld_mapGenXSize.setToolTipText("Map x size");
+        fld_mapGenXSize.setText("65");
 
         fld_mapGenYSize = new JTextField();
         fld_mapGenYSize.setBounds(fld_mapGenXSize.getBounds().x + fld_mapGenXSize.getWidth() + MARGIN, 0 + MARGIN, 50, STD_HEIGHT);
         fld_mapGenYSize.setName("Map Y Size");
         fld_mapGenYSize.setToolTipText("Map y size");
+        fld_mapGenYSize.setText("50");
 
         add(fld_mapGenXSize);
         add(fld_mapGenYSize);
@@ -243,7 +245,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
     private void setupFloodTerrainContents() {
         // Flooding terrain elements
-        SpinnerNumberModel floodSpnModel = new SpinnerNumberModel(255.0f, 1.0f, 255.0f, 1.0f);
+        SpinnerNumberModel floodSpnModel = new SpinnerNumberModel(80.0f, 1.0f, 255.0f, 1.0f);
         spn_floodWaterHeight = new JSpinner(floodSpnModel);
         spn_floodWaterHeight.setBounds(0 + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         spn_floodWaterHeight.setEnabled(false);
@@ -264,16 +266,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_rmNoiseIterations.setBounds(0 + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_rmNoiseIterations.setToolTipText("Noise removal iterations");
         fld_rmNoiseIterations.setEnabled(false);
+        fld_rmNoiseIterations.setText("2");
 
         fld_rmNoiseThreshold = new JTextField();
         fld_rmNoiseThreshold.setBounds(fld_rmNoiseIterations.getBounds().x + fld_rmNoiseIterations.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_rmNoiseThreshold.setToolTipText("Noise removal threshold");
         fld_rmNoiseThreshold.setEnabled(false);
+        fld_rmNoiseThreshold.setText("17");
 
         fld_rmNoiseSize = new JTextField();
         fld_rmNoiseSize.setBounds(fld_rmNoiseThreshold.getBounds().x + fld_rmNoiseThreshold.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_rmNoiseSize.setToolTipText("Noise removal area size");
         fld_rmNoiseSize.setEnabled(false);
+        fld_rmNoiseSize.setText("2");
 
         add(fld_rmNoiseIterations);
         add(fld_rmNoiseThreshold);
@@ -293,6 +298,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_smoothHeightSize.setBounds(0 + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_smoothHeightSize.setToolTipText("Height smoothing area size");
         fld_smoothHeightSize.setEnabled(false);
+        fld_rmNoiseSize.setText("1");
 
         add(fld_smoothHeightSize);
 
@@ -310,16 +316,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_addBeachIterations.setBounds(0 + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_addBeachIterations.setToolTipText("Beach addition iterations");
         fld_addBeachIterations.setEnabled(false);
+        fld_addBeachIterations.setText("1");
 
         fld_addBeachThreshold = new JTextField();
         fld_addBeachThreshold.setBounds(fld_addBeachIterations.getBounds().x + fld_addBeachIterations.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_addBeachThreshold.setToolTipText("Beach addition threshold");
         fld_addBeachThreshold.setEnabled(false);
+        fld_addBeachThreshold.setText("8");
 
         fld_addBeachSize = new JTextField();
         fld_addBeachSize.setBounds(fld_addBeachThreshold.getBounds().x + fld_addBeachThreshold.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_addBeachSize.setToolTipText("Beach addition area size");
         fld_addBeachSize.setEnabled(false);
+        fld_addBeachSize.setText("2");
 
         add(fld_addBeachIterations);
         add(fld_addBeachThreshold);

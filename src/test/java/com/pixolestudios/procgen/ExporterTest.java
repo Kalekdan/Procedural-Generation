@@ -1,7 +1,6 @@
 package com.pixolestudios.procgen;
 
 import main.java.com.pixolestudios.exceptions.UninitializedMapException;
-import main.java.com.pixolestudios.fileUtils.FileUtils;
 import main.java.com.pixolestudios.procgen.Exporter;
 import main.java.com.pixolestudios.procgen.MapGrid;
 import org.junit.Assert;
