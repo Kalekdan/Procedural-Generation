@@ -2,7 +2,6 @@
 #
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
-version: 2
 jobs:
   build:
     docker:
@@ -114,3 +113,15 @@ jobs:
 
       # checks test coverage
       - run: gradle jacocoTestCoverageVerification
+
+workflows:
+  version: 2
+  build-test-and-coverage:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - coverage:
+          requires:
+            - test
