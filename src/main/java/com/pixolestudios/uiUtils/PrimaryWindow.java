@@ -298,7 +298,7 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         fld_smoothHeightSize.setBounds(0 + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 50, STD_HEIGHT);
         fld_smoothHeightSize.setToolTipText("Height smoothing area size");
         fld_smoothHeightSize.setEnabled(false);
-        fld_rmNoiseSize.setText("1");
+        fld_smoothHeightSize.setText("1");
 
         add(fld_smoothHeightSize);
 
