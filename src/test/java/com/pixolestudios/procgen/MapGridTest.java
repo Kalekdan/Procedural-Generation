@@ -144,4 +144,39 @@ public class MapGridTest {
         Assert.assertEquals("w:21.0\t\tw:21.0\t\tw:21.0\t\t\n" +
                 "w:21.0\t\tw:21.0\t\tw:21.0\t\t\n", map.toString());
     }
+
+    @Test
+    public void floodMapAboveMaxHeightFillsWithWater() throws UninitializedMapException {
+        MapGrid map = new MapGrid(xSizeOfGrid, ySizeOfGrid);
+        map.InitialGenerateDryMap(20, 20);
+        map.FloodMap(21);
+
+        for (int x = 0; x < xSizeOfGrid; x++) {
+            for (int y = 0; y < ySizeOfGrid; y++) {
+                Assert.assertEquals("w", map.getPointAtLoc(x, y).getType());
+            }
+        }
+    }
+
+    @Test
+    public void generateMap0PercentWaterIsDry() throws UninitializedMapException {
+        MapGrid map = new MapGrid(xSizeOfGrid, ySizeOfGrid);
+        map.InitialGenerateMap(0.0f, 20, 20);
+        for (int x = 0; x < xSizeOfGrid; x++) {
+            for (int y = 0; y < ySizeOfGrid; y++) {
+                Assert.assertEquals("l", map.getPointAtLoc(x, y).getType());
+            }
+        }
+    }
+
+    @Test
+    public void generateMap100PercentWaterIsWet() throws UninitializedMapException {
+        MapGrid map = new MapGrid(xSizeOfGrid, ySizeOfGrid);
+        map.InitialGenerateMap(100.0f, 20, 20);
+        for (int x = 0; x < xSizeOfGrid; x++) {
+            for (int y = 0; y < ySizeOfGrid; y++) {
+                Assert.assertEquals("w", map.getPointAtLoc(x, y).getType());
+            }
+        }
+    }
 }

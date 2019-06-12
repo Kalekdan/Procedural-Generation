@@ -10,6 +10,7 @@ public class Exporter {
 
     /**
      * Construct a new Exporter object to export maps
+     *
      * @param map the map to be exported
      */
     public Exporter(GridPoint[][] map) {
@@ -18,46 +19,43 @@ public class Exporter {
 
     /**
      * Export the heightmap to a csv file
+     *
      * @param outputFile path to the file to export to
      */
-    public void ExportHeightMapCSV(String outputFile){
+    public void ExportHeightMapCSV(String outputFile) throws IOException {
         String fileContent = "";
         FileUtils.mkdirs(outputFile);
-        try (FileWriter fileWriter = new FileWriter(outputFile)) {
-            for (int j = 0; j < map[0].length; j++) {
-                fileContent += map[0][j].getHeight();
-                for (int i = 1; i < map.length; i++) {
-                    fileContent += "," + map[i][j].getHeight();
-                }
-                fileWriter.write(fileContent + "\n");
-                fileContent = "";
+        FileWriter fileWriter = new FileWriter(outputFile);
+        for (int j = 0; j < map[0].length; j++) {
+            fileContent += map[0][j].getHeight();
+            for (int i = 1; i < map.length; i++) {
+                fileContent += "," + map[i][j].getHeight();
             }
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            fileWriter.write(fileContent + "\n");
+            fileContent = "";
         }
+        fileWriter.close();
     }
 
     /**
      * Export a csv of terrain types
+     *
      * @param outputFile path to the file to export to
      */
-    public void ExportTerrainTypeCSV(String outputFile){
+    public void ExportTerrainTypeCSV(String outputFile) throws IOException {
         String fileContent = "";
         FileUtils.mkdirs(outputFile);
-        try (FileWriter fileWriter = new FileWriter(outputFile)) {
-            for (int j = 0; j < map[0].length; j++) {
-                fileContent += map[0][j].getType();
-                for (int i = 1; i < map.length; i++) {
-                    fileContent += "," + map[i][j].getType();
-                }
-                fileWriter.write(fileContent + "\n");
-                fileContent = "";
+        FileWriter fileWriter = new FileWriter(outputFile);
+        for (int j = 0; j < map[0].length; j++) {
+            fileContent += map[0][j].getType();
+            for (int i = 1; i < map.length; i++) {
+                fileContent += "," + map[i][j].getType();
             }
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            fileWriter.write(fileContent + "\n");
+            fileContent = "";
         }
+        fileWriter.close();
+
     }
 
 }

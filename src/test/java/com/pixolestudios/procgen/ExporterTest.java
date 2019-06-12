@@ -1,6 +1,7 @@
 package com.pixolestudios.procgen;
 
 import main.java.com.pixolestudios.exceptions.UninitializedMapException;
+import main.java.com.pixolestudios.fileUtils.FileUtils;
 import main.java.com.pixolestudios.procgen.Exporter;
 import main.java.com.pixolestudios.procgen.MapGrid;
 import org.junit.Assert;
@@ -21,7 +22,7 @@ public class ExporterTest {
     private final int mapXSize = 10, mapYSize = 20;
 
     @Test
-    public void assertExportHeightMapCSVOutputExists() {
+    public void assertExportHeightMapCSVOutputExists() throws IOException {
         MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
         mapToExport.InitialGenerateDryMap(1, 255);
 
@@ -68,16 +69,16 @@ public class ExporterTest {
         export.ExportHeightMapCSV(testOutLoc + "/assertExportHeightMapCSVOutputsExpectedData.csv");
 
         BufferedReader reader = new BufferedReader(new FileReader(testOutLoc + "/assertExportHeightMapCSVOutputsExpectedData.csv"));
-        for (int y = 0; y < mapYSize; y++){
+        for (int y = 0; y < mapYSize; y++) {
             String[] line = reader.readLine().split(",");
-            for (int x = 0; x < mapXSize; x++){
+            for (int x = 0; x < mapXSize; x++) {
                 Assert.assertEquals("Height map csv does not match at x:" + x + " y:" + y, String.valueOf(mapToExport.getPointAtLoc(x, y).getHeight()), line[x]);
             }
         }
     }
 
     @Test
-    public void assertExportTerrainTypeCSVOutputExists() {
+    public void assertExportTerrainTypeCSVOutputExists() throws IOException {
         MapGrid mapToExport = new MapGrid(mapXSize, mapYSize);
         mapToExport.InitialGenerateDryMap(1, 255);
 
@@ -124,9 +125,9 @@ public class ExporterTest {
         export.ExportTerrainTypeCSV(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedData.csv");
 
         BufferedReader reader = new BufferedReader(new FileReader(testOutLoc + "/assertExportTerrainTypeCSVOutputsExpectedData.csv"));
-        for (int y = 0; y < mapYSize; y++){
+        for (int y = 0; y < mapYSize; y++) {
             String[] line = reader.readLine().split(",");
-            for (int x = 0; x < mapXSize; x++){
+            for (int x = 0; x < mapXSize; x++) {
                 Assert.assertEquals("Terrain type csv does not match at x:" + x + " y:" + y, mapToExport.getPointAtLoc(x, y).getType(), line[x]);
             }
         }
