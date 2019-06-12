@@ -48,7 +48,7 @@ jobs:
           root: .
           # Must be relative path from root
           paths:
-            - echo-output
+            - .
 
   test:
     docker:
@@ -95,7 +95,7 @@ jobs:
           root: .
           # Must be relative path from root
           paths:
-            - echo-output
+            - .
 
   coverage:
     docker:
