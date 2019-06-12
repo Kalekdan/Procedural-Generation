@@ -39,7 +39,7 @@ public class ImageGenTest {
     }
 
     @Test
-    public void imageGenOnUninitializedMapDoesntMakeImage() {
+    public void imageGenOnUninitializedMapDoesntMakeImage() throws IOException {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
 
         ImageGen img = new ImageGen(mapToImage, testOutLoc + "/imageGenOnUninitiatedMapDoesntMakeImage.png", 1);
@@ -54,7 +54,7 @@ public class ImageGenTest {
     }
 
     @Test
-    public void imageGenOnMapMakesImageInExpectedLocation() throws UninitializedMapException {
+    public void imageGenOnMapMakesImageInExpectedLocation() throws UninitializedMapException, IOException {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
         mapToImage.InitialGenerateDryMap(1, 255);
 
@@ -65,7 +65,7 @@ public class ImageGenTest {
     }
 
     @Test
-    public void imageGenNoLocationSpecifiedMakesImageInDefLocation() throws UninitializedMapException {
+    public void imageGenNoLocationSpecifiedMakesImageInDefLocation() throws UninitializedMapException, IOException {
         MapGrid mapToImage = new MapGrid(mapXSize, mapYSize);
         mapToImage.InitialGenerateDryMap(1, 255);
 

@@ -43,7 +43,7 @@ public class ImageGen {
     /**
      * Generates the image of the map at the output location provided in construction
      */
-    public void GenerateImg() throws UninitializedMapException {
+    public void GenerateImg() throws UninitializedMapException, IOException {
         if (!map.isInstantiated()){
             throw new UninitializedMapException();
         }
@@ -84,11 +84,7 @@ public class ImageGen {
             }
         }
         //write image
-        try {
-            ImageIO.write(img, "png", OutputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ImageIO.write(img, "png", OutputFile);
     }
 
 

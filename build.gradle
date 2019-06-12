@@ -101,7 +101,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.9
+                minimum = 1.0
             }
             excludes = [ //Excludes main class, ui classes and test classes from coverage check
                     'main.java.com.pixolestudios.procgen.MapGenMain',
