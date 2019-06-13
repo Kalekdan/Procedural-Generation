@@ -133,7 +133,7 @@ public class MapGrid {
         int numTerrainTiles = 0;
         for (int i = -squareSizeToCompare; i <= squareSizeToCompare; i++) {
             for (int j = -squareSizeToCompare; j <= squareSizeToCompare; j++) {
-                if (terrainType.equals(map[i + xpos][j + ypos].getType()) && pointInBounds(i + xpos, j + ypos)) {
+                if (pointInBounds(i + xpos, j + ypos) && terrainType.equals(map[i + xpos][j + ypos].getType())) {
                     numTerrainTiles++;
                 }
             }
