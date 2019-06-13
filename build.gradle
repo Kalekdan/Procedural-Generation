@@ -106,6 +106,7 @@ jacocoTestCoverageVerification {
             excludes = [ //Excludes main class, ui classes and test classes from coverage check
                     'main.java.com.pixolestudios.procgen.MapGenMain',
                     'main.java.com.pixolestudios.uiUtils.*',
+                    'com.pixolestudios.procgen.JUnitFrameworkTest',
                     'com.pixolestudios.procgen.MapGridTest',
                     'com.pixolestudios.procgen.ImageGenTest'
             ]
