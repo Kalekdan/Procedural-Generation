@@ -88,7 +88,7 @@ public class MapGrid {
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
-                    if (noTerrainTilesSurroundingPoints(gridPoints, i, j, "w", squareSizeToCompare) >= threshold && gridPoints[i][j].getType().equals("l")) {
+                    if (gridPoints[i][j].getType().equals("l") && noTerrainTilesSurroundingPoints(gridPoints, i, j, "w", squareSizeToCompare) >= threshold) {
                         tempMap[i][j].setType("b");
                     } else {
                         tempMap[i][j].setType(gridPoints[i][j].getType());
@@ -133,10 +133,8 @@ public class MapGrid {
         int numTerrainTiles = 0;
         for (int i = -squareSizeToCompare; i <= squareSizeToCompare; i++) {
             for (int j = -squareSizeToCompare; j <= squareSizeToCompare; j++) {
-                if (pointInBounds(i + xpos, j + ypos)) {
-                    if ((terrainType.equals(map[i + xpos][j + ypos].getType()))) {
-                        numTerrainTiles++;
-                    }
+                if (terrainType.equals(map[i + xpos][j + ypos].getType()) && pointInBounds(i + xpos, j + ypos)) {
+                    numTerrainTiles++;
                 }
             }
         }
@@ -154,11 +152,10 @@ public class MapGrid {
             throw new UninitializedMapException();
         }
         GridPoint[][] smoothMap = copyMap(gridPoints);
-        float avgHeight;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
                 if (!smoothMap[i][j].getType().equals("w")) {
-                    avgHeight = averageHeightSurroundingPoints(smoothMap, i, j, squareSizeToCompare);
+                    float avgHeight = averageHeightSurroundingPoints(smoothMap, i, j, squareSizeToCompare);
                     smoothMap[i][j].setHeight(avgHeight);
                 }
             }
@@ -177,7 +174,7 @@ public class MapGrid {
                 }
             }
         }
-        avg = avg / numPointsChecked;
+        avg /= numPointsChecked;
         return avg;
     }
 
