@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
 
-public class PrimaryWindow extends JFrame implements ActionListener {
+public class PrimaryWindow extends JFrame {
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
     private static final int MARGIN = 20;
@@ -72,40 +72,6 @@ public class PrimaryWindow extends JFrame implements ActionListener {
         setupAddBeachesContents();
 
         setupImgPreview();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        try {
-            // If the event source was btn_genMapObj etc
-            if (e.getSource() == btn_genMapObj) {
-                doGenEmptyMapObjEvent();
-            } else if (e.getSource() == btn_genDryMap) {
-                doGenDryMapEvent();
-                imgWindow.addImageToView(map);
-                imgWindow.setVisible(true);
-            } else if (e.getSource() == btn_floodMap) {
-                doFloodMapEvent();
-                imgWindow.addImageToView(map);
-                imgWindow.setVisible(true);
-            } else if (e.getSource() == btn_rmNoise) {
-                doRemoveNoiseEvent();
-                imgWindow.addImageToView(map);
-                imgWindow.setVisible(true);
-            } else if (e.getSource() == btn_smoothHeight) {
-                doSmoothHeightEvent();
-                imgWindow.addImageToView(map);
-                imgWindow.setVisible(true);
-            } else if (e.getSource() == btn_addBeach) {
-                doAddBeachEvent();
-                imgWindow.addImageToView(map);
-                imgWindow.setVisible(true);
-            }
-        } catch (UninitializedMapException ex) {
-            handleUninitializedMap();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
     }
 
     private void handleUninitializedMap() {
@@ -221,7 +187,11 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
         btn_genMapObj = new JButton("Create empty map object");
         btn_genMapObj.setBounds(fld_mapGenYSize.getBounds().x + fld_mapGenYSize.getWidth() + MARGIN, 0 + MARGIN, 200, STD_HEIGHT);
-        btn_genMapObj.addActionListener(this);
+        btn_genMapObj.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                doGenEmptyMapObjEvent();
+            }
+        });
 
         add(btn_genMapObj);
     }
@@ -237,7 +207,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
         btn_genDryMap = new JButton("Generate dry map");
         btn_genDryMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, fld_mapGenXSize.getBounds().y + fld_mapGenXSize.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_genDryMap.addActionListener(this);
+        btn_genDryMap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    doGenDryMapEvent();
+                    imgWindow.addImageToView(map);
+                    imgWindow.setVisible(true);
+                } catch (UninitializedMapException e1) {
+                    handleUninitializedMap();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btn_genDryMap.setEnabled(false);
 
         add(btn_genDryMap);
@@ -254,7 +236,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
         btn_floodMap = new JButton("Flood map");
         btn_floodMap.setBounds(spn_mapMaxHeight.getBounds().x + spn_mapMaxHeight.getWidth() + MARGIN, spn_mapMaxHeight.getBounds().y + spn_mapMaxHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_floodMap.addActionListener(this);
+        btn_floodMap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    doFloodMapEvent();
+                    imgWindow.addImageToView(map);
+                    imgWindow.setVisible(true);
+                } catch (UninitializedMapException e1) {
+                    handleUninitializedMap();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btn_floodMap.setEnabled(false);
 
         add(btn_floodMap);
@@ -286,7 +280,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
         btn_rmNoise = new JButton("Remove noise");
         btn_rmNoise.setBounds(fld_rmNoiseSize.getBounds().x + fld_rmNoiseSize.getWidth() + MARGIN, spn_floodWaterHeight.getBounds().y + spn_floodWaterHeight.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_rmNoise.addActionListener(this);
+        btn_rmNoise.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    doRemoveNoiseEvent();
+                    imgWindow.addImageToView(map);
+                    imgWindow.setVisible(true);
+                } catch (UninitializedMapException e1) {
+                    handleUninitializedMap();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btn_rmNoise.setEnabled(false);
 
         add(btn_rmNoise);
@@ -304,7 +310,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
         btn_smoothHeight = new JButton("Smooth heights");
         btn_smoothHeight.setBounds(fld_smoothHeightSize.getBounds().x + fld_smoothHeightSize.getWidth() + MARGIN, fld_rmNoiseIterations.getBounds().y + fld_rmNoiseIterations.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_smoothHeight.addActionListener(this);
+        btn_smoothHeight.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    doSmoothHeightEvent();
+                    imgWindow.addImageToView(map);
+                    imgWindow.setVisible(true);
+                } catch (UninitializedMapException e1) {
+                    handleUninitializedMap();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btn_smoothHeight.setEnabled(false);
 
         add(btn_smoothHeight);
@@ -336,7 +354,19 @@ public class PrimaryWindow extends JFrame implements ActionListener {
 
         btn_addBeach = new JButton("Add beaches");
         btn_addBeach.setBounds(fld_addBeachSize.getBounds().x + fld_addBeachSize.getWidth() + MARGIN, fld_smoothHeightSize.getBounds().y + fld_smoothHeightSize.getHeight() + MARGIN, 200, STD_HEIGHT);
-        btn_addBeach.addActionListener(this);
+        btn_addBeach.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    doAddBeachEvent();
+                    imgWindow.addImageToView(map);
+                    imgWindow.setVisible(true);
+                } catch (UninitializedMapException e1) {
+                    handleUninitializedMap();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
         btn_addBeach.setEnabled(false);
 
         add(btn_addBeach);
