@@ -1,5 +1,6 @@
 package main.java.com.pixolestudios.uiUtils;
 
+import main.java.com.pixolestudios.exceptions.NoPPGSelectedException;
 import main.java.com.pixolestudios.exceptions.UninitializedMapException;
 import main.java.com.pixolestudios.plogger.PLog;
 import main.java.com.pixolestudios.procgen.ImageGen;
@@ -13,6 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +35,7 @@ public class ImgWindow extends JFrame {
     private static final int targetImgWidth = 600;
     private static final int targetImgHeight = 600;
     private static final int startingPixelsPerGrid = 500;
-    private static int pixelsPerGrid;
+    private int pixelsPerGrid;
 
     private ImageGen imgGen;
     private MapGrid map;
@@ -115,16 +120,38 @@ public class ImgWindow extends JFrame {
     }
 
     private void doSaveImageEvent() throws UninitializedMapException, IOException {
-        fileChooser = new JFileChooser();
-        int r = fileChooser.showSaveDialog(null);
-        // if the user selects a file
-        if (r == JFileChooser.APPROVE_OPTION) {
-            savePath = fileChooser.getSelectedFile().getAbsolutePath();
-            PLog.info("Saving image at " + savePath);
-            ImageGen imgSave = new ImageGen(map, savePath, pixelsPerGrid);
-            imgSave.GenerateImg();
+        try {
+            int exportPPG = pixelsPerGridSelection();
+            fileChooser = new JFileChooser();
+            int r = fileChooser.showSaveDialog(null);
+            // if the user selects a file
+            if (r == JFileChooser.APPROVE_OPTION) {
+                savePath = fileChooser.getSelectedFile().getAbsolutePath();
+                PLog.info("Saving image at " + savePath);
+                ImageGen imgSave = new ImageGen(map, savePath, exportPPG);
+                imgSave.GenerateImg();
+            } else {
+                PLog.debug("Save image cancelled");
+            }
+        } catch (NoPPGSelectedException e) {
+            PLog.warning(e.getMessage() + " - Cancelling save");
+        }
+    }
+
+    private int pixelsPerGridSelection() throws NoPPGSelectedException {
+        JPanel pnl_dialog = new JPanel();
+        JLabel lbl_message = new JLabel("<html>How many pixels per grid point?<br><i>Hint: current preview is using " + pixelsPerGrid + "</i></html>");
+        SpinnerNumberModel spn_model = new SpinnerNumberModel(pixelsPerGrid, 1, 200, 1);
+        JSpinner spn_ppg = new JSpinner(spn_model);
+
+        pnl_dialog.add(lbl_message);
+        pnl_dialog.add(spn_ppg);
+        int option = JOptionPane.showOptionDialog(null, pnl_dialog, "Pixel size selection", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+        if (option == JOptionPane.OK_OPTION) {
+            return (int) spn_ppg.getValue();
         } else {
-            PLog.debug("Save image cancelled");
+            throw new NoPPGSelectedException();
         }
     }
 
