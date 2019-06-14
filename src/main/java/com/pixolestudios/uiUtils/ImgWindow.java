@@ -27,7 +27,10 @@ public class ImgWindow extends JFrame {
     private static final int MARGIN = 20;
     private static final int STD_HEIGHT = 25;
 
-    private static final int pixelsPerGrid = 10;
+    private static final int targetImgWidth = 600;
+    private static final int targetImgHeight = 600;
+    private static final int startingPixelsPerGrid = 500;
+    private static int pixelsPerGrid;
 
     private ImageGen imgGen;
     private MapGrid map;
@@ -44,6 +47,7 @@ public class ImgWindow extends JFrame {
         setupWindow();
         setupWindowContents();
         setLayout(null);
+        setResizable(false);
     }
 
     private void setupWindow() {
@@ -60,7 +64,9 @@ public class ImgWindow extends JFrame {
     }
 
     protected void addImageToView(MapGrid mapToImg) throws IOException, UninitializedMapException {
+        pixelsPerGrid = startingPixelsPerGrid;
         map = mapToImg;
+        AutoAdjustPixelsPerGrid();
         imgGen = new ImageGen(map, pixelsPerGrid);
         imgGen.GenerateImg();
         BufferedImage img = ImageIO.read(new File(ImageGen.DEFAULT_OUT_LOC));
@@ -71,6 +77,17 @@ public class ImgWindow extends JFrame {
         picLabel.setVisible(true);
         repaint();
         pack();
+    }
+
+    private void AutoAdjustPixelsPerGrid() {
+        if (map.getXSize() > targetImgWidth || map.getYSize() > targetImgHeight) {
+            pixelsPerGrid = 1;
+            return;
+        }
+        if (map.getXSize() * pixelsPerGrid > targetImgWidth || map.getYSize() * pixelsPerGrid > targetImgHeight) {
+            pixelsPerGrid--;
+            AutoAdjustPixelsPerGrid();
+        }
     }
 
     private void setupSave() {
