@@ -110,9 +110,6 @@ public class PrimaryWindow extends JFrame {
         try {
             spn_floodWaterHeight.commitEdit();
             PLog.info("Flooding terrain");
-            if (map == null) {
-                throw new UninitializedMapException();
-            }
             map.FloodMap(((Double) spn_floodWaterHeight.getValue()).floatValue());
         } catch (ParseException e) {
             PLog.warning("Flood height must be a valid integer in range 1-255");
@@ -126,9 +123,6 @@ public class PrimaryWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Noise iterations, noise threshold and noise size must be valid whole numbers", "Invalid value", JOptionPane.WARNING_MESSAGE);
         } else {
             PLog.info("Removing terrain noise");
-            if (map == null) {
-                throw new UninitializedMapException();
-            }
             map.RemoveTerrainNoise(Integer.parseInt(fld_rmNoiseIterations.getText()), Integer.parseInt(fld_rmNoiseThreshold.getText()), Integer.parseInt(fld_rmNoiseSize.getText()));
         }
     }
@@ -139,9 +133,6 @@ public class PrimaryWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Smooth height area must be a valid whole number", "Invalid value", JOptionPane.WARNING_MESSAGE);
         } else {
             PLog.info("Smooothing heights");
-            if (map == null) {
-                throw new UninitializedMapException();
-            }
             map.BasicSmoothHeightMap(Integer.parseInt(fld_smoothHeightSize.getText()));
         }
     }
@@ -152,9 +143,6 @@ public class PrimaryWindow extends JFrame {
             JOptionPane.showMessageDialog(this, "Beach addition iterations, threshold and area size must be valid whole numbers", "Invalid value", JOptionPane.WARNING_MESSAGE);
         } else {
             PLog.info("Adding beaches");
-            if (map == null) {
-                throw new UninitializedMapException();
-            }
             map.AddBeaches(Integer.parseInt(fld_addBeachIterations.getText()), Integer.parseInt(fld_addBeachThreshold.getText()), Integer.parseInt(fld_addBeachSize.getText()));
         }
     }
