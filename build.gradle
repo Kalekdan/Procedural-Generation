@@ -108,7 +108,8 @@ jacocoTestCoverageVerification {
                     'main.java.com.pixolestudios.uiUtils.*',
                     'com.pixolestudios.procgen.JUnitFrameworkTest',
                     'com.pixolestudios.procgen.MapGridTest',
-                    'com.pixolestudios.procgen.ImageGenTest'
+                    'com.pixolestudios.procgen.ImageGenTest',
+                    'main.java.com.pixolestudios.exceptions.NoPPGSelectedException'
             ]
         }
     }
