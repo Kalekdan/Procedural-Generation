@@ -56,7 +56,7 @@ public class ImgWindow extends JFrame {
     }
 
     private void setupWindow() {
-        PLog.debug("Creating image view window: " + WINDOW_TITLE);
+        PLog.debug("Creating image view window: " + WINDOW_TITLE, "ui");
         setTitle(WINDOW_TITLE);
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -127,14 +127,14 @@ public class ImgWindow extends JFrame {
             // if the user selects a file
             if (r == JFileChooser.APPROVE_OPTION) {
                 savePath = fileChooser.getSelectedFile().getAbsolutePath();
-                PLog.info("Saving image at " + savePath);
+                PLog.info("Saving image at " + savePath, "image_gen");
                 ImageGen imgSave = new ImageGen(map, savePath, exportPPG);
                 imgSave.GenerateImg();
             } else {
-                PLog.debug("Save image cancelled");
+                PLog.debug("Save image cancelled", "image_gen");
             }
         } catch (NoPPGSelectedException e) {
-            PLog.warning(e.getMessage() + " - Cancelling save");
+            PLog.warning(e.getMessage() + " - Cancelling save", "ui");
         }
     }
 

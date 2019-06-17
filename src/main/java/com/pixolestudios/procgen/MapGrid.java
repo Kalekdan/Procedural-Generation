@@ -84,7 +84,7 @@ public class MapGrid {
         }
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            PLog.debug("Beach adding - Iteration " + (count + 1) + "/" + iterations);
+            PLog.debug("Beach adding - Iteration " + (count + 1) + "/" + iterations, "map_gen");
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {
@@ -113,7 +113,7 @@ public class MapGrid {
         }
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
-            PLog.debug("Noise Reduction - Iteration " + (count + 1) + "/" + iterations);
+            PLog.debug("Noise Reduction - Iteration " + (count + 1) + "/" + iterations, "map_gen");
             tempMap = copyMap(gridPoints);
             for (int i = 0; i < xSize; i++) {
                 for (int j = 0; j < ySize; j++) {

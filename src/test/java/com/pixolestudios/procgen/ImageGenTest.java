@@ -46,7 +46,7 @@ public class ImageGenTest {
         try {
             img.GenerateImg();
         } catch (UninitializedMapException e) {
-            PLog.warning("Map has not been initialized");
+            PLog.warning("Map has not been initialized", "test");
         }
 
         File output = new File(testOutLoc + "/imageGenOnUninitiatedMapDoesntMakeImage.png");
