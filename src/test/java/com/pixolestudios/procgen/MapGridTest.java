@@ -95,7 +95,6 @@ public class MapGridTest {
         Assert.assertEquals(ySize, map.getYSize());
     }
 
-    //TODO Update test, may need to create override functions to check equality of points
     @Test
     public void assertMapPointGetterReturnsCorrectPoint() throws UninitializedMapException {
         MapGrid map = generateFixedMapGrid();

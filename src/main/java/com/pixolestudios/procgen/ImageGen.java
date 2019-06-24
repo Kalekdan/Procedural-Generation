@@ -77,7 +77,6 @@ public class ImageGen {
                     b = 0;
                 }
 
-                //TODO add height->alpha calculation
                 a = Math.round(map.getPointAtLoc(x, y).getHeight());
 
                 int p = (a << 24) | (r << 16) | (g << 8) | b; //pixel
