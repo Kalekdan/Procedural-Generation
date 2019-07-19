@@ -13,12 +13,11 @@ public class MapGrid {
     private boolean isInstantiated = false;
 
     public MapGrid(int xSize, int ySize) {
-        this.xSize = xSize;
-        this.ySize = ySize;
-        gridPoints = new GridPoint[xSize][ySize];
+        this(new GridPoint[xSize][ySize], xSize, ySize);
     }
 
     public MapGrid(GridPoint[][] map, int xSize, int ySize) {
+        PLog.info("Creating map object", "map_gen");
         this.xSize = xSize;
         this.ySize = ySize;
         gridPoints = map;
@@ -47,6 +46,7 @@ public class MapGrid {
      * @param maxHeight the maximum terrain height value
      */
     public void InitialGenerateDryMap(float minHeight, float maxHeight) {
+        PLog.info("Generating dry terrain", "map_gen");
         InitialGenerateMap(0, minHeight, maxHeight);
     }
 
@@ -59,6 +59,7 @@ public class MapGrid {
         if (!isInstantiated) {
             throw new UninitializedMapException();
         }
+        PLog.info("Flooding terrain", "map_gen");
         waterHeightLevel = waterLevel;
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {
@@ -82,6 +83,7 @@ public class MapGrid {
         if (!isInstantiated) {
             throw new UninitializedMapException();
         }
+        PLog.info("Adding beaches", "map_gen");
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             PLog.debug("Beach adding - Iteration " + (count + 1) + "/" + iterations, "map_gen");
@@ -111,6 +113,7 @@ public class MapGrid {
         if (!isInstantiated) {
             throw new UninitializedMapException();
         }
+        PLog.info("Removing terrain noise", "map_gen");
         GridPoint[][] tempMap = copyMap(gridPoints);
         for (int count = 0; count < iterations; count++) {
             PLog.debug("Noise Reduction - Iteration " + (count + 1) + "/" + iterations, "map_gen");
@@ -151,6 +154,7 @@ public class MapGrid {
         if (!isInstantiated) {
             throw new UninitializedMapException();
         }
+        PLog.info("Smooothing heights", "map_gen");
         GridPoint[][] smoothMap = copyMap(gridPoints);
         for (int i = 0; i < xSize; i++) {
             for (int j = 0; j < ySize; j++) {

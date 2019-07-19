@@ -49,7 +49,7 @@ public class ImageGen {
         if (!map.isInstantiated()) {
             throw new UninitializedMapException();
         }
-        PLog.debug("Generating image - Size:" + width * ppg + "x" + height * ppg, "image_gen");
+        PLog.debug("Generating image at " + OutputFile.getAbsolutePath() + " - Size:" + width * ppg + "x" + height * ppg, "image_gen");
         BufferedImage img = new BufferedImage(width * ppg, height * ppg, BufferedImage.TYPE_INT_ARGB);
 
         int a, r, g, b;

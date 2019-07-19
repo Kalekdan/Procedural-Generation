@@ -127,7 +127,6 @@ public class ImgWindow extends JFrame {
             // if the user selects a file
             if (r == JFileChooser.APPROVE_OPTION) {
                 savePath = fileChooser.getSelectedFile().getAbsolutePath();
-                PLog.info("Saving image at " + savePath, "image_gen");
                 ImageGen imgSave = new ImageGen(map, savePath, exportPPG);
                 imgSave.GenerateImg();
             } else {
